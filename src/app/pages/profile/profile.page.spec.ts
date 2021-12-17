@@ -1,7 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+
+import { IonicModule } from '@ionic/angular';
+
 import { ProfilePage } from './profile.page';
+
 
 describe('FolderPage', () => {
     let component: ProfilePage;

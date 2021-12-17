@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import {
     HttpRequest,
     HttpHandler,
@@ -11,13 +9,14 @@ import {
     HTTP_INTERCEPTORS
 } from '@angular/common/http';
 
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-    constructor() {
-        //...
-    }
+    constructor() { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         return next.handle(request).pipe(

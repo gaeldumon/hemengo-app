@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+
 @Component({
     selector: 'app-root',
     templateUrl: 'app.component.html',
@@ -7,13 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
     public appPages = [
-        { title: 'Home',        url: '/profile/Home',       icon: 'home'    },
-        { title: 'Orders',      url: '/profile/Orders',     icon: 'bag'     },
-        { title: 'Favorites',   url: '/profile/Favorites',  icon: 'heart'   },
-        { title: 'Archived',    url: '/profile/Archived',   icon: 'archive' },
+        { title: 'Home', url: '/profile/Home', icon: 'home' },
+        { title: 'Orders', url: '/profile/Orders', icon: 'bag' },
+        { title: 'Favorites', url: '/profile/Favorites', icon: 'heart' },
+        { title: 'Archived', url: '/profile/Archived', icon: 'archive' },
     ];
 
-    constructor() {
-        //...
-    }
+    constructor() { }
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
+
 
 @Component({
     selector: 'app-login',
@@ -15,14 +18,11 @@ export class LoginPage implements OnInit {
 
     constructor(
         private authService: AuthService,
-        private tokenService: TokenService
-    ) {
-        //...
-    }
+        private tokenService: TokenService,
+        private router: Router
+    ) { }
 
-    ngOnInit(): void {
-        //...
-    }
+    ngOnInit(): void { }
 
     onSubmit(): void {
         console.log(this.user);
@@ -31,5 +31,4 @@ export class LoginPage implements OnInit {
             err => console.error("onSubmit AuthService error", err)
         );
     }
-
 }
