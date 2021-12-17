@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    authEndpoint: "http://localhost:3000/auth/"
+    authEndpoint: "http://192.168.0.91:3000/auth/"
 };
 
 /*

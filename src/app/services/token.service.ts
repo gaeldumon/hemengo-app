@@ -11,7 +11,7 @@ export class TokenService {
 
     saveToken(token: string): void {
         localStorage.setItem('token', token);
-        this.router.navigate(['/folder/Home']);
+        this.router.navigate(['/profile/Home']);
     }
 
     getToken(): string | null {

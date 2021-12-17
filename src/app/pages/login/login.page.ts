@@ -12,8 +12,8 @@ import { TokenService } from 'src/app/services/token.service';
 })
 export class LoginPage implements OnInit {
     user = {
-        email: "",
-        password: ""
+        email: "arthur@mail.fr",
+        password: "gaga1989"
     }
 
     constructor(
@@ -22,10 +22,16 @@ export class LoginPage implements OnInit {
         private router: Router
     ) { }
 
-    ngOnInit(): void { }
+    ngOnInit(): void {
+        console.log(this.user);
+
+        this.authService.login(this.user).subscribe(
+            data => this.tokenService.saveToken(data.accessToken),
+            err => console.error("ngOnInit AuthService error", err)
+        );
+    }
 
     onSubmit(): void {
-        console.log(this.user);
         this.authService.login(this.user).subscribe(
             data => this.tokenService.saveToken(data.accessToken),
             err => console.error("onSubmit AuthService error", err)
