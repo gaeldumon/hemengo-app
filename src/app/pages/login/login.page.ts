@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { TokenService } from '../services/token.service';
+import { TokenService } from 'src/app/services/token.service';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
         private tokenService: TokenService
     ) {
         //...
-     }
+    }
 
     ngOnInit(): void {
         //...
