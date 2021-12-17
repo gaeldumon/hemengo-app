@@ -1,0 +1,6 @@
+{
+	"appId": "com.hemengo.app",
+	"appName": "HemengoApp",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
