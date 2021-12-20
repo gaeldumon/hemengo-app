@@ -18,12 +18,15 @@
                             routerLinkActive="selected">
 
                             <ion-icon 
+                                color="{{p.flag}}"
                                 slot="start" 
                                 [ios]="p.icon + '-outline'" 
                                 [md]="p.icon + '-sharp'">
                             </ion-icon>
 
-                            <ion-label>{{ p.title }}</ion-label>
+                            <ion-label color="{{p.flag}}">
+                                {{ p.title }}
+                            </ion-label>
                         </ion-item>
                     </ion-menu-toggle>
                 </ion-list>

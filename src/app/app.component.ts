@@ -12,6 +12,7 @@ export class AppComponent {
         { title: 'Orders', url: '/profile/Orders', icon: 'bag' },
         { title: 'Favorites', url: '/profile/Favorites', icon: 'heart' },
         { title: 'Archived', url: '/profile/Archived', icon: 'archive' },
+        { title: 'Demo', url: '/demo/distrib', icon: 'color-wand', flag: "warning" }
     ];
 
     constructor() { }

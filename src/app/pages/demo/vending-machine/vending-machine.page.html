@@ -1,0 +1,16 @@
+<ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-title>HEMENGO DISTRIB</ion-card-title>
+        </ion-card-header>
+        <ion-grid>
+            <ion-row *ngFor="let line of vendingMachine">
+                <ion-col *ngFor="let col of line">
+                    <div class="locker">
+                        {{ col.toUpperCase() }}
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
+</ion-content>
