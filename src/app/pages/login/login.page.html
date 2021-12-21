@@ -1,8 +1,52 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title>Login</ion-title>
+        <ion-title>Connexion</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <ion-card>
+        <ion-card-header>
+            <ion-card-subtitle>
+                Entrez votre identifiant et votre mot de passe
+            </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+            <form 
+                #form="ngForm" 
+                (ngSubmit)="login(form.value)" 
+                method="post">
+
+                <ion-item lines="full">
+                    <ion-label>Email</ion-label>
+                    <ion-input 
+                        name="email" 
+                        type="email" 
+                        minlength="8"
+                        ngModel 
+                        required>
+                    </ion-input>
+                </ion-item>
+
+                <ion-item lines="full">
+                    <ion-label>Mot de passe</ion-label>
+                    <ion-input 
+                        name="password" 
+                        type="password" 
+                        minlength="8"
+                        ngModel 
+                        required>
+                    </ion-input>
+                </ion-item>
+
+                <ion-button 
+                    type="submit" 
+                    [disabled]="form.invalid"
+                    expand="block">
+                    Se connecter
+                </ion-button>
+            </form>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ICredential } from 'src/app/interfaces/credential';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
@@ -11,28 +12,16 @@ import { TokenService } from 'src/app/services/token.service';
     styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-    user = {
-        email: "arthur@mail.fr",
-        password: "gaga1989"
-    }
-
     constructor(
         private authService: AuthService,
         private tokenService: TokenService,
         private router: Router
     ) { }
 
-    ngOnInit(): void {
-        console.log(this.user);
+    ngOnInit(): void { }
 
-        this.authService.login(this.user).subscribe(
-            data => this.tokenService.saveToken(data.accessToken),
-            err => console.error("ngOnInit AuthService error", err)
-        );
-    }
-
-    onSubmit(): void {
-        this.authService.login(this.user).subscribe(
+    login(creds: ICredential): void {
+        this.authService.login(creds).subscribe(
             data => this.tokenService.saveToken(data.accessToken),
             err => console.error("onSubmit AuthService error", err)
         );
