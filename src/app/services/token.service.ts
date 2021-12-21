@@ -7,15 +7,28 @@ import { Router } from '@angular/router';
 })
 export class TokenService {
 
+    private TOKEN_FIELD_NAME = "accessToken";
+
     constructor(private router: Router) { }
 
+    /**
+     * Enregistre le token d'accés (par exemple lors du login/register) dans le 
+     * local storage et redirige vers la route /profile.
+     * @param token 
+     */
     saveToken(token: string): void {
-        localStorage.setItem('token', token);
-        this.router.navigate(['/profile/Home']);
+        localStorage.setItem(this.TOKEN_FIELD_NAME, token);
+        this.router.navigate(['/profile']);
     }
 
+    /**
+     * Retourne le token (accessToken) présent dans le local storage ou null si
+     * aucun token sous ce nom n'est trouvé.
+     * @returns 
+     */
     getToken(): string | null {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem(this.TOKEN_FIELD_NAME);
+
         if (!!token) {
             return token;
         } else {
@@ -23,13 +36,22 @@ export class TokenService {
         }
     }
 
+    /**
+     * Retourne true si un token sous le nom accessToken est trouvé dans le 
+     * local storage, false autrement.
+     * @returns 
+     */
     isLogged(): boolean {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem(this.TOKEN_FIELD_NAME);
         return !!token;
     }
 
-    clearToken() {
-        localStorage.removeItem('token');
-        this.router.navigate(['/auth/login']);
+    /**
+     * Supprime le token sous le nom accessToken du local storage et redirige
+     * vers la route /login.
+     */
+    clearToken(): void {
+        localStorage.removeItem(this.TOKEN_FIELD_NAME);
+        this.router.navigate(['/login']);
     }
 }

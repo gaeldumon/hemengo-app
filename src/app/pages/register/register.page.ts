@@ -6,11 +6,11 @@ import { TokenService } from 'src/app/services/token.service';
 
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
+    selector: 'app-register',
+    templateUrl: './register.page.html',
+    styleUrls: ['./register.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class RegisterPage implements OnInit {
     errorStatus: number;
 
     constructor(
@@ -21,17 +21,15 @@ export class LoginPage implements OnInit {
     ngOnInit(): void { }
 
     login(creds: ICredential): void {
-        this.authService.login(creds).subscribe(
+        this.authService.register(creds).subscribe(
             data => this.tokenService.saveToken(data.accessToken),
             err => this.errorStatus = err.status
         );
     }
 
     getErrorMsg(): string {
-        if (this.errorStatus >= 400 && this.errorStatus < 500) {
-            return "Connexion non autorisé avec ces identifiants";
-        } else if (this.errorStatus < 400 || this.errorStatus >= 500) {
-            return "Echec connexion";
+        if (this.errorStatus) {
+            return "Identifiants non valides"
         }
     }
 }

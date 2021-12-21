@@ -19,4 +19,8 @@ export class AuthService {
     login(credentials: ICredential): Observable<IToken> {
         return this.http.post<IToken>(environment.authEndpoint + "login", credentials)
     }
+
+    register(credentials: ICredential): Observable<IToken> {
+        return this.http.post<IToken>(environment.authEndpoint + "register", credentials)
+    }
 }
