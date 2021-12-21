@@ -10,6 +10,9 @@
             <ion-card-subtitle>
                 Entrez votre identifiant et votre mot de passe
             </ion-card-subtitle>
+            <ion-note *ngIf="errorStatus" color="danger">
+                {{ getErrorMsg() }}
+            </ion-note>
         </ion-card-header>
 
         <ion-card-content>
