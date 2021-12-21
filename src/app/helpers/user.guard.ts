@@ -9,7 +9,7 @@ import { TokenService } from '../services/token.service';
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class UserGuard implements CanActivate {
 
     constructor(
         private tokenService: TokenService,
@@ -21,10 +21,10 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot
     ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
         if (this.tokenService.isLogged()) {
-            return true;
-        } else {
-            this.router.navigate(['/login']);
+            this.router.navigate(['/profile']);
             return false;
+        } else {
+            return true;
         }
     }
 }

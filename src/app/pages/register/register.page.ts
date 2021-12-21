@@ -20,7 +20,7 @@ export class RegisterPage implements OnInit {
 
     ngOnInit(): void { }
 
-    login(creds: ICredential): void {
+    register(creds: ICredential): void {
         this.authService.register(creds).subscribe(
             data => this.tokenService.saveToken(data.accessToken),
             err => this.errorStatus = err.status
