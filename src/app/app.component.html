@@ -1,3 +1,7 @@
 <ion-app>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
+    <app-menu *ngIf="tokenService.isLogged()">
+    </app-menu>
+
+    <ion-router-outlet *ngIf="!tokenService.isLogged()" id="main-content">
+    </ion-router-outlet>
 </ion-app>

@@ -5,13 +5,15 @@ import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
+import { MenuComponent } from './components/menu/menu.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        MenuComponent
     ],
     entryComponents: [],
     imports: [

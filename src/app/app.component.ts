@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TokenService } from './services/token.service';
 
 
 @Component({
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
     styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-    constructor() { }
+    constructor(private tokenService: TokenService) {}
 }
