@@ -11,31 +11,45 @@ import {
 
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { TokenService } from '../services/token.service';
 
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 
-    constructor() { }
+    constructor(private tokenService: TokenService) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-        return next.handle(request).pipe(
-            catchError(error => {
-                console.log(error);
+        console.log("là on est dans l'intercepteur, requête originale ci-dessous"); //à supprimer
+        console.log(request); // à supprimer
+        let token = this.tokenService.getToken();
 
-                let message = "";
+        if (token !== null) {
+            let clone = request.clone({
+                headers: request.headers.set('Authorization', 'bearer ' + token)
+            });
+            console.log("requête modifiée ci-dessous") //à supprimer
+            console.log(clone); // à supprimer
+            return next.handle(clone);
+        } else {
+            return next.handle(request).pipe(
+                catchError(error => {
+                    console.log(error);
 
-                if (error.error instanceof ErrorEvent) {
-                    message = `Client Error : ${error.error.message}`;
-                } else {
-                    message = `Server Error : ${error.status}\nMessage: ${error.message}`;
-                }
+                    let message = "";
 
-                console.log(message);
+                    if (error.error instanceof ErrorEvent) {
+                        message = `Client Error : ${error.error.message}`;
+                    } else {
+                        message = `Server Error : ${error.status}\nMessage: ${error.message}`;
+                    }
 
-                return throwError(message);
-            })
-        );
+                    console.log(message);
+
+                    return throwError(message);
+                })
+            );
+        }
     }
 }
 

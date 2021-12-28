@@ -8,6 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { MenuComponent } from './components/menu/menu.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { TokenInterceptorProvider } from './helpers/token.interceptor';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AppRoutingModule } from './app-routing.module';
     providers: [{
         provide: RouteReuseStrategy,
         useClass: IonicRouteStrategy
-    }],
+    },
+        TokenInterceptorProvider],
     bootstrap: [
         AppComponent
     ],

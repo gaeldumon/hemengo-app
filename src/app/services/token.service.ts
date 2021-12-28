@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 })
 export class TokenService {
 
-    private TOKEN_FIELD_NAME = "accessToken";
+    private TOKEN_FIELD_NAME = "token";
 
     constructor(private router: Router) { }
 

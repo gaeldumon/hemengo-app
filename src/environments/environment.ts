@@ -4,8 +4,10 @@
 
 export const environment = {
     production: false,
-    authEndpoint: "http://localhost:3000/auth/"
+    authEndpoint: "http://localhost:3000/auth/",
+    userEndpoint: "http://localhost:3000/user/"
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
