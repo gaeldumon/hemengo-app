@@ -22,7 +22,9 @@ export class LoginPage implements OnInit {
 
     login(creds: ICredential): void {
         this.authService.login(creds).subscribe(
-            data => this.tokenService.saveToken(data.accessToken),
+            data => {
+                console.log("Mon token : " + data.token)
+                this.tokenService.saveToken(data.token)},
             err => this.errorStatus = err.status
         );
     }
