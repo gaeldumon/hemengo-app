@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TokenService {
-
-    private TOKEN_FIELD_NAME = "token";
 
     constructor(private router: Router) { }
 
@@ -17,7 +15,7 @@ export class TokenService {
      * @param token 
      */
     saveToken(token: string): void {
-        localStorage.setItem(this.TOKEN_FIELD_NAME, token);
+        localStorage.setItem(environment.accessToken, token);
         this.router.navigate(['/profile']);
     }
 
@@ -26,13 +24,13 @@ export class TokenService {
      * aucun token sous ce nom n'est trouvé.
      * @returns 
      */
-    getToken(): string | null {
-        const token = localStorage.getItem(this.TOKEN_FIELD_NAME);
+    getToken(): string | false {
+        const token = localStorage.getItem(environment.accessToken);
 
         if (!!token) {
             return token;
         } else {
-            return null;
+            return false;
         }
     }
 
@@ -42,7 +40,7 @@ export class TokenService {
      * @returns 
      */
     isLogged(): boolean {
-        const token = localStorage.getItem(this.TOKEN_FIELD_NAME);
+        const token = localStorage.getItem(environment.accessToken);
         return !!token;
     }
 
@@ -51,7 +49,7 @@ export class TokenService {
      * vers la route /login.
      */
     clearToken(): void {
-        localStorage.removeItem(this.TOKEN_FIELD_NAME);
+        localStorage.removeItem(environment.accessToken);
         this.router.navigate(['/login']);
     }
 }

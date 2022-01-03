@@ -23,11 +23,13 @@ import { TokenInterceptorProvider } from './helpers/token.interceptor';
         AppRoutingModule,
         HttpClientModule
     ],
-    providers: [{
-        provide: RouteReuseStrategy,
-        useClass: IonicRouteStrategy
-    },
-        TokenInterceptorProvider],
+    providers: [
+        {
+            provide: RouteReuseStrategy,
+            useClass: IonicRouteStrategy
+        },
+        TokenInterceptorProvider
+    ],
     bootstrap: [
         AppComponent
     ],

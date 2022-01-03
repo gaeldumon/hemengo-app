@@ -2,8 +2,10 @@
     <ion-menu contentId="main-content" type="overlay">
         <ion-content>
             <ion-list id="inbox-list">
-                <ion-list-header>Bienvenue sur Hemengo</ion-list-header>
-                <ion-note>user@mail.com</ion-note>
+                <ion-list-header>
+                    Bienvenue sur Hemengo, {{ getUsernameByEmailSplit() }}
+                </ion-list-header>
+                <ion-note>{{ user.email }}</ion-note>
 
                 <ion-menu-toggle 
                     auto-hide="false" 
@@ -31,5 +33,7 @@
             </ion-list>
         </ion-content>
     </ion-menu>
+
     <ion-router-outlet id="main-content"></ion-router-outlet>
+    
 </ion-split-pane>

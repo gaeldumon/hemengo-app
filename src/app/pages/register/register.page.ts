@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ICredential } from 'src/app/interfaces/credential';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-register',
@@ -11,7 +10,7 @@ import { TokenService } from 'src/app/services/token.service';
     styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
-    errorStatus: number;
+    private errorStatus: number;
 
     constructor(
         private authService: AuthService,
@@ -22,7 +21,9 @@ export class RegisterPage implements OnInit {
 
     register(creds: ICredential): void {
         this.authService.register(creds).subscribe(
-            data => this.tokenService.saveToken(data.token),
+            data => {
+                this.tokenService.saveToken(data[environment.accessToken])
+            },
             err => this.errorStatus = err.status
         );
     }

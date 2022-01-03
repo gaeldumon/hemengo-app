@@ -4,10 +4,12 @@
 
 export const environment = {
     production: false,
-    authEndpoint: "http://localhost:3000/auth/",
-    userEndpoint: "http://localhost:3000/user/"
+    accessToken: "accessToken",
+    endpoint: {
+        auth: "http://localhost:3000/auth/",
+        user: "http://localhost:3000/user/"
+    }
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file
@@ -16,4 +18,6 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+// Included with Angular CLI.
+// import 'zone.js/dist/zone-error';  

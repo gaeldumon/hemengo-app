@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ICredential } from 'src/app/interfaces/credential';
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
-
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-login',
@@ -11,7 +10,7 @@ import { TokenService } from 'src/app/services/token.service';
     styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-    errorStatus: number;
+    private errorStatus: number;
 
     constructor(
         private authService: AuthService,
@@ -23,8 +22,8 @@ export class LoginPage implements OnInit {
     login(creds: ICredential): void {
         this.authService.login(creds).subscribe(
             data => {
-                console.log("Mon token : " + data.token)
-                this.tokenService.saveToken(data.token)},
+                this.tokenService.saveToken(data[environment.accessToken])
+            },
             err => this.errorStatus = err.status
         );
     }
