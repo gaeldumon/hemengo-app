@@ -17,6 +17,16 @@ export class MenuComponent implements OnInit {
             { title: "Demo", url: "/demo", icon: "cube" },
             { title: "Deconnexion", url: "/logout", icon: "exit" }
         ]
+        this.user = {
+            id: 0,
+            email: '',
+            password: '',
+            username: '',
+            firstname: '',
+            lastname: '',
+            adress: '',
+            verified: false
+        };
     }
 
     ngOnInit(): void {
@@ -24,7 +34,7 @@ export class MenuComponent implements OnInit {
 
         this.userService.getOneUser(this.userService.payload.id).subscribe(
             res => {
-                this.user = res.data;
+                this.user = res.user;
             },
             err => {
                 console.log(err);
@@ -32,7 +42,4 @@ export class MenuComponent implements OnInit {
         );
     }
 
-    getUsernameByEmailSplit(): string {
-        return this.user.email.split("@")[0];
-    }
 }
