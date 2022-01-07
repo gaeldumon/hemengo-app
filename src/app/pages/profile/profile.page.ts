@@ -19,7 +19,7 @@ export class ProfilePage implements OnInit {
 
         this.userService.getOneUser(this.userService.payload.id).subscribe(
             res => {
-                this.user = res.data;
+                this.user = res.user;
             },
             err => console.log(err)
         )
