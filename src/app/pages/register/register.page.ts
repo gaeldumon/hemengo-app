@@ -21,9 +21,7 @@ export class RegisterPage implements OnInit {
 
     register(creds: ICredential): void {
         this.authService.register(creds).subscribe(
-            data => {
-                this.tokenService.saveToken(data[environment.accessToken])
-            },
+            data => this.tokenService.saveToken(data[environment.accessToken]),
             err => this.errorStatus = err.status
         );
     }

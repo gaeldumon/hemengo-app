@@ -1,10 +1,18 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Distributeur de demonstration</ion-title>
+    </ion-toolbar>
+</ion-header>
+
 <ion-content>
     <ion-card>
         <ion-card-header>
-            <ion-card-title>HEMENGO DISTRIB</ion-card-title>
+            <ion-card-subtitle>
+                Distributeur numero {{ vendingMachine.uuid }}
+            </ion-card-subtitle>
         </ion-card-header>
         <ion-grid>
-            <ion-row *ngFor="let line of vendingMachine">
+            <ion-row *ngFor="let line of vendingMachine.grid">
                 <ion-col *ngFor="let col of line">
                     <div class="locker">
                         {{ col.toUpperCase() }}

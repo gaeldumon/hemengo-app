@@ -22,15 +22,21 @@ export class UserService {
         return this._payload;
     }
 
-    setUserPayload(): void {
+    public setUserPayload(): void {
         const token = this.tokenService.getToken();
 
         if (token) {
             this._payload = JSON.parse(window.atob(token.split(".")[1]));
+        } else {
+            throw new Error("Unable to find token for setting user payload");
         }
     }
 
-    getOneUser(id: number): Observable<any> {
-        return this.http.get<IUser>(environment.endpoint.user + id)
+    public getOneUser(id: number): Observable<any> {
+        return this.http.get<IUser>(environment.endpoint.user + id);
+    }
+
+    public getAllOrders(): Observable<any> {
+        return this.http.get<IUser>(environment.endpoint.order);
     }
 }

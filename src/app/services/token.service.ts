@@ -14,17 +14,17 @@ export class TokenService {
      * local storage et redirige vers la route /profile.
      * @param token 
      */
-    saveToken(token: string): void {
+    public saveToken(token: string): void {
         localStorage.setItem(environment.accessToken, token);
         this.router.navigate(['/profile']);
     }
 
     /**
-     * Retourne le token (accessToken) présent dans le local storage ou null si
+     * Retourne le token (accessToken) présent dans le local storage ou false si
      * aucun token sous ce nom n'est trouvé.
-     * @returns 
+     * @returns string|false
      */
-    getToken(): string | false {
+    public getToken(): string | false {
         const token = localStorage.getItem(environment.accessToken);
 
         if (!!token) {
@@ -39,7 +39,7 @@ export class TokenService {
      * local storage, false autrement.
      * @returns 
      */
-    isLogged(): boolean {
+    public isLogged(): boolean {
         const token = localStorage.getItem(environment.accessToken);
         return !!token;
     }
@@ -48,7 +48,7 @@ export class TokenService {
      * Supprime le token sous le nom accessToken du local storage et redirige
      * vers la route /login.
      */
-    clearToken(): void {
+    public clearToken(): void {
         localStorage.removeItem(environment.accessToken);
         this.router.navigate(['/login']);
     }

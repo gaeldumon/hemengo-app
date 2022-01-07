@@ -7,7 +7,8 @@ export const environment = {
     accessToken: "accessToken",
     endpoint: {
         auth: "http://localhost:3000/auth/",
-        user: "http://localhost:3000/user/"
+        user: "http://localhost:3000/user/",
+        order: "http://localhost:3000/order/"
     }
 };
 

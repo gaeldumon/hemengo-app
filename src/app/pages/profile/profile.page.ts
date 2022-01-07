@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IUser } from 'src/app/interfaces/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,20 +7,19 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-    private user: IUser;
+    private orders: object[];
 
-    constructor(
-        private userService: UserService
-    ) { }
+    constructor(private userService: UserService) {
+        this.orders = [];
+    }
 
     ngOnInit(): void {
-        this.userService.setUserPayload();
-
-        this.userService.getOneUser(this.userService.payload.id).subscribe(
+        this.userService.getAllOrders().subscribe(
             res => {
-                this.user = res.user;
+                this.orders = res.orders;
+                console.table(this.orders);
             },
-            err => console.log(err)
-        )
+            err => console.error(err.message)
+        );
     }
 }
