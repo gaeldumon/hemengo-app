@@ -32,11 +32,20 @@ export class UserService {
         }
     }
 
-    public getOneUser(id: number): Observable<any> {
-        return this.http.get<IUser>(environment.endpoint.user + id);
+    /**
+     * Get user
+     * @param id 
+     * @returns 
+     */
+    public getOneUser(userId: number): Observable<any> {
+        return this.http.get<IUser>(environment.endpoint.user + userId);
     }
 
-    public getAllOrders(): Observable<any> {
-        return this.http.get<IUser>(environment.endpoint.order);
+    /**
+     * Get user's orders
+     * @returns 
+     */
+    public getOrders(userId: number): Observable<any> {
+        return this.http.get<IUser>(`${environment.endpoint.order}user/${userId}`);
     }
 }

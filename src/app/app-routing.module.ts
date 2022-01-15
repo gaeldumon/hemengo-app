@@ -6,7 +6,7 @@ import { UserGuard } from './helpers/user.guard';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'splash',
         pathMatch: 'full'
     },
     {
@@ -33,6 +33,11 @@ const routes: Routes = [
         path: 'logout',
         loadChildren: () => import('./pages/logout/logout.module')
             .then(m => m.LogoutPageModule), canActivate: [AuthGuard]
+    },
+    {
+        path: 'splash',
+        loadChildren: () => import('./pages/splash/splash.module')
+            .then(m => m.SplashPageModule), canActivate: [UserGuard]
     },
     {
         path: '**',

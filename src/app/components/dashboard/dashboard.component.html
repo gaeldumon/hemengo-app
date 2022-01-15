@@ -9,12 +9,22 @@
                     {{ user.email }}
                 </ion-note>
 
-                <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
+                <ion-menu-toggle 
+                    auto-hide="false" 
+                    *ngFor="let p of appPages; let i = index">
 
-                    <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
+                    <ion-item 
+                        routerDirection="root" 
+                        [routerLink]="[p.url]" 
+                        lines="none" 
+                        detail="false"
                         routerLinkActive="selected">
 
-                        <ion-icon color="{{p.flag}}" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'">
+                        <ion-icon 
+                            color="{{p.flag}}" 
+                            slot="start" 
+                            [ios]="p.icon + '-outline'" 
+                            [md]="p.icon + '-sharp'">
                         </ion-icon>
 
                         <ion-label color="{{p.flag}}">
