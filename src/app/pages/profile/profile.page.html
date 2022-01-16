@@ -11,7 +11,7 @@
 
     <ion-grid>
         <ion-row>
-            <ion-col *ngFor="let order of orders">
+            <ion-col *ngFor="let order of orders" size="5">
                 <ion-card>
                     <ion-card-header>
                         <div [style.backgroundColor]="getRandomColor()" style="height: 10em;">
@@ -27,7 +27,11 @@
                             </ion-item>
                             <ion-item>
                                 <ion-icon name="cart-sharp" slot="start"></ion-icon>
-                                <ion-label>{{ order.products }}</ion-label>
+                                <div>
+                                    <ion-chip *ngFor="let product of order.products">
+                                        <ion-label>{{ product.name }}</ion-label>
+                                    </ion-chip>
+                                </div>
                             </ion-item>
                             <ion-item>
                                 <ion-icon name="hourglass-outline" slot="start"></ion-icon>
@@ -35,7 +39,9 @@
                             </ion-item>
                             <ion-item>
                                 <ion-icon name="location-sharp" slot="start"></ion-icon>
-                                <ion-label>{{ order.city }}</ion-label>
+                                <ion-label>
+                                    {{ order.city.name.toUpperCase() }} ({{ order.city.postalCode}})
+                                </ion-label>
                             </ion-item>
                         </ion-list>
                         <ion-button expand="block" color="medium" style="margin-top: 1em; margin-bottom: 1em;">

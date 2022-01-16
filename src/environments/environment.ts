@@ -6,10 +6,12 @@ export const environment = {
     production: false,
     accessToken: "accessToken",
     endpoint: {
-        upload: "http://localhost:3000/upload/",
-        auth:   "http://localhost:3000/auth/",
-        user:   "http://localhost:3000/user/",
-        order:  "http://localhost:3000/order/"
+        upload:         "http://localhost:3000/upload/",
+        auth:           "http://localhost:3000/auth/",
+        user:           "http://localhost:3000/user/",
+        order:          "http://localhost:3000/order/",
+        city:           "http://localhost:3000/city/",
+        vendingMachine: "http://localhost:3000/vendingmachine/"
     }
 };
 

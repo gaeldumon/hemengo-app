@@ -7,15 +7,36 @@ import { UserService } from 'src/app/services/user.service';
     styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-    private orders: object[];
+    private orders: any;
 
     constructor(private userService: UserService) {
         this.orders = [];
     }
 
     ngOnInit(): void {
-        this.userService.getOrders(this.userService.payload.id).subscribe(
-            res => { this.orders = res.orders },
+        this.userService.getOrdersByUserId(this.userService.payload.id).subscribe(
+            res => {
+                this.orders = res.orders;
+
+                this.orders.forEach((order, i) => {
+
+                    this.userService.getOrderProductsByOrderId(order.id).subscribe(
+                        res => this.orders[i].products = res.products
+                    );
+
+                    this.userService.getVendingMachineById(order.VendingMachineId).subscribe(
+                        res => {
+                            this.orders[i].vendingMachine = res.machine;
+
+                            this.userService.getCityById(res.machine.CityId).subscribe(
+                                res => this.orders[i].city = res.city
+                            );
+                        }
+                    );
+                })
+
+                console.log(this.orders)
+            },
             err => console.error(err.message)
         );
     }

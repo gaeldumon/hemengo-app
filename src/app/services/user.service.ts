@@ -45,7 +45,39 @@ export class UserService {
      * Get user's orders
      * @returns 
      */
-    public getOrders(userId: number): Observable<any> {
-        return this.http.get<IUser>(`${environment.endpoint.order}user/${userId}`);
+    public getOrdersByUserId(userId: number): Observable<any> {
+        return this.http.get(`${environment.endpoint.order}user/${userId}`);
     }
+
+    /**
+     * TODO: create an order service
+     * @param orderId 
+     * @returns 
+     */
+    public getOrderProductsByOrderId(orderId: number): Observable<any> {
+        return this.http.get(`${environment.endpoint.order}${orderId}/products`);
+    }
+
+    /**
+     * TODO: create a vending machine service
+     * @param id 
+     * @returns 
+     */
+    public getVendingMachineById(id: number): Observable<any> {
+        return this.http.get(
+            `${environment.endpoint.vendingMachine}id/${id}`
+        );
+    }
+
+    /**
+     * TODO: create a geolocation service
+     * @param id 
+     * @returns 
+     */
+    public getCityById(id: number): Observable<any> {
+        return this.http.get(
+            `${environment.endpoint.city}${id}`
+        );
+    }
+
 }
