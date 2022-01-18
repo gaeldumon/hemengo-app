@@ -6,13 +6,13 @@ import { UserGuard } from './helpers/user.guard';
 import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
-    //{
-    //    path: '',
-    //    redirectTo: 'splash',
-    //    pathMatch: 'full'
-    //},
     {
-        path: '', component: LayoutComponent, children: [
+        path: '',
+        redirectTo: 'splash',
+        pathMatch: 'full'
+    },
+    {
+        path: 'profile', component: LayoutComponent, children: [
             {
                 path: 'profile',
                 loadChildren: () => import('./pages/profile/profile.module')
