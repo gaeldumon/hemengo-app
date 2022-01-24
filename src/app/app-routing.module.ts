@@ -12,7 +12,7 @@ const routes: Routes = [
         pathMatch: 'full'
     },
     {
-        path: 'profile', component: LayoutComponent, children: [
+        path: '', component: LayoutComponent, children: [
             {
                 path: 'profile',
                 loadChildren: () => import('./pages/profile/profile.module')
