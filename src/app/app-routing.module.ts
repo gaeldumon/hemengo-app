@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { UserGuard } from './helpers/user.guard';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -24,7 +23,6 @@ const routes: Routes = [
                     .then(m => m.VendingMachinePageModule), canActivate: [AuthGuard]
             },
         ]
-
     },
     {
         path: 'login',

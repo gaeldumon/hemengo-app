@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { TokenService } from 'src/app/services/token.service';
 import { toastController } from '@ionic/core';
 
@@ -15,6 +14,11 @@ export class LogoutPage implements OnInit {
         private tokenService: TokenService,
     ) { }
 
+    /**
+     * 
+     * @param message 
+     * @param icon 
+     */
     async toastSuccess(message: string, icon: string) {
         const toast = await toastController.create({
             color: 'success',
@@ -22,6 +26,7 @@ export class LogoutPage implements OnInit {
             message: message,
             icon: icon
         });
+
         await toast.present();
     }
 

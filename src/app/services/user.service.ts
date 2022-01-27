@@ -18,10 +18,16 @@ export class UserService {
         private tokenService: TokenService
     ) { }
 
+    /**
+     * 
+     */
     get payload(): ICredentialPayload {
         return this._payload;
     }
 
+    /**
+     * 
+     */
     public setUserPayload(): void {
         const token = this.tokenService.getToken();
 
@@ -33,51 +39,11 @@ export class UserService {
     }
 
     /**
-     * Get user
+     * Get one user by its user id.
      * @param id 
      * @returns 
      */
-    public getOneUser(userId: number): Observable<any> {
+    public getOne(userId: number): Observable<any> {
         return this.http.get<IUser>(environment.endpoint.user + userId);
     }
-
-    /**
-     * Get user's orders
-     * @returns 
-     */
-    public getOrdersByUserId(userId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.order}user/${userId}`);
-    }
-
-    /**
-     * TODO: create an order service
-     * @param orderId 
-     * @returns 
-     */
-    public getOrderProductsByOrderId(orderId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.order}${orderId}/products`);
-    }
-
-    /**
-     * TODO: create a vending machine service
-     * @param id 
-     * @returns 
-     */
-    public getVendingMachineById(id: number): Observable<any> {
-        return this.http.get(
-            `${environment.endpoint.vendingMachine}id/${id}`
-        );
-    }
-
-    /**
-     * TODO: create a geolocation service
-     * @param id 
-     * @returns 
-     */
-    public getCityById(id: number): Observable<any> {
-        return this.http.get(
-            `${environment.endpoint.city}${id}`
-        );
-    }
-
 }

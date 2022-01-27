@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
             username: "",
             firstname: "",
             lastname: "",
-            adress: "",
+            address: "",
             verified: false
         };
     }
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         this.userService.setUserPayload();
 
-        this.userService.getOneUser(this.userService.payload.id).subscribe(
+        this.userService.getOne(this.userService.payload.id).subscribe(
             res => this.user = res.user,
             err => console.error(err)
         );

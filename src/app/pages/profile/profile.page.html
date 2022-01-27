@@ -10,13 +10,15 @@
     </ion-item>
 
     <ion-grid>
-        <ion-row>
-            <ion-col *ngFor="let order of orders" size="5">
+        <ion-row *ngFor="let order of orders; let i = index;">
+            <ion-col>
                 <ion-card>
                     <ion-card-header>
-                        <div [style.backgroundColor]="getRandomColor()" style="height: 10em;">
+                        <div [style.backgroundColor]="randomColors[i]" style="height: 10em;">
                         </div>
-                        <ion-card-title>Commande {{ order.id }}</ion-card-title>
+                        <ion-card-title>
+                            Commande {{ order.id }}
+                        </ion-card-title>
                     </ion-card-header>
 
                     <ion-card-content>

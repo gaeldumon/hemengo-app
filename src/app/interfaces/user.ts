@@ -5,6 +5,6 @@ export interface IUser {
     username: string,
     firstname: string,
     lastname: string,
-    adress: string,
+    address: string,
     verified: boolean
 }

@@ -12,10 +12,20 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
+    /**
+     * 
+     * @param credentials 
+     * @returns 
+     */
     login(credentials: ICredential): Observable<IToken> {
         return this.http.post<IToken>(environment.endpoint.auth + "login", credentials)
     }
 
+    /**
+     * 
+     * @param credentials 
+     * @returns 
+     */
     register(credentials: ICredential): Observable<IToken> {
         return this.http.post<IToken>(environment.endpoint.auth + "register", credentials)
     }
