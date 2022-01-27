@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { TokenInterceptorProvider } from './helpers/token.interceptor';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        DashboardComponent
+        DashboardComponent,
+        LayoutComponent
     ],
     entryComponents: [],
     imports: [

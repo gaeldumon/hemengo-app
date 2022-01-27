@@ -1,13 +1,30 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { UserGuard } from './helpers/user.guard';
+import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
     {
         path: '',
         redirectTo: 'splash',
         pathMatch: 'full'
+    },
+    {
+        path: '', component: LayoutComponent, children: [
+            {
+                path: 'profile',
+                loadChildren: () => import('./pages/profile/profile.module')
+                    .then(m => m.ProfilePageModule), canActivate: [AuthGuard]
+            },
+            {
+                path: 'demo',
+                loadChildren: () => import('./pages/demo/vending-machine/vending-machine.module')
+                    .then(m => m.VendingMachinePageModule), canActivate: [AuthGuard]
+            },
+        ]
+
     },
     {
         path: 'login',
@@ -18,16 +35,6 @@ const routes: Routes = [
         path: 'register',
         loadChildren: () => import('./pages/register/register.module')
             .then(m => m.RegisterPageModule), canActivate: [UserGuard]
-    },
-    {
-        path: 'profile',
-        loadChildren: () => import('./pages/profile/profile.module')
-            .then(m => m.ProfilePageModule), canActivate: [AuthGuard]
-    },
-    {
-        path: 'demo',
-        loadChildren: () => import('./pages/demo/vending-machine/vending-machine.module')
-            .then(m => m.VendingMachinePageModule), canActivate: [AuthGuard]
     },
     {
         path: 'logout',
