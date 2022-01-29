@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
-import { Utils } from 'src/app/helpers/utils';
 import { environment } from 'src/environments/environment';
 import { IOrder } from 'src/app/interfaces/order';
 import { CityService } from 'src/app/services/city.service';
@@ -14,7 +13,8 @@ import { VendingMachineService } from 'src/app/services/vending-machine.service'
 })
 export class ProfilePage implements OnInit {
     private orders: IOrder[];
-    private randomColors: string[];
+    private historicOrders: IOrder[];
+    private cardColor: object;
 
     constructor(
         private cityService: CityService,
@@ -23,17 +23,19 @@ export class ProfilePage implements OnInit {
         private vendingMachineService: VendingMachineService
     ) {
         this.orders = [];
-        this.randomColors = [];
+        this.historicOrders = [];
+        this.cardColor = {
+            primary: "#d9b791",
+            secondary: "#313c6e"
+        }
     }
 
     ngOnInit(): void {
         this.orderService.getByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.orders = res.orders;
-                this.randomColors = Utils.getRandomColors(this.orders.length);
-                this.orders.forEach((order, i) => {
-                    this.orders[i].pickupDate = Utils.formatDatetime(order.pickupDate);
 
+                this.orders.forEach((order, i) => {
                     this.orderService.getProducts(order.id)
                         .subscribe(res => this.orders[i].products = res.products);
 
@@ -45,9 +47,20 @@ export class ProfilePage implements OnInit {
                                     .subscribe(res => this.orders[i].city = res.city);
                             }
                         );
-                })
+                });
             },
             err => (environment.production) ? false : console.error(err.message)
         );
+    }
+
+    /**
+     * 
+     * @param date 
+     * @returns 
+     */
+    private formatDatetime(date: string): string {
+        const d = new Date(date);
+        const month = ((d.getMonth() + 1) < 9) ? "0" + (d.getMonth() + 1) : d.getMonth() + 1;
+        return `${d.getDate()}/${month}/${d.getFullYear()}`;
     }
 }

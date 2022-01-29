@@ -7,7 +7,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'splash',
+        redirectTo: 'hello',
         pathMatch: 'full'
     },
     {
@@ -40,7 +40,7 @@ const routes: Routes = [
             .then(m => m.LogoutPageModule), canActivate: [AuthGuard]
     },
     {
-        path: 'splash',
+        path: 'hello',
         loadChildren: () => import('./pages/splash/splash.module')
             .then(m => m.SplashPageModule), canActivate: [UserGuard]
     },
