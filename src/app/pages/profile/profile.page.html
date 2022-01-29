@@ -10,8 +10,8 @@
     </ion-item>
 
     <ion-grid>
-        <ion-row *ngFor="let order of orders; let i = index;">
-            <ion-col>
+        <ion-row>
+            <ion-col *ngFor="let order of orders; let i = index;" size="12" size-sm>
                 <ion-card>
                     <ion-card-header>
                         <div [style.backgroundColor]="randomColors[i]" style="height: 10em;">

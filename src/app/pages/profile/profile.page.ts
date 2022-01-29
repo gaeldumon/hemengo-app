@@ -47,7 +47,7 @@ export class ProfilePage implements OnInit {
                         );
                 })
             },
-            err => (!environment.production) ? console.error(err.message) : false
+            err => (environment.production) ? false : console.error(err.message)
         );
     }
 }
