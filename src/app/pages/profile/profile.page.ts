@@ -10,6 +10,7 @@ import { isToday } from 'src/app/helpers/util';
 import { Platform } from '@ionic/angular';
 // TODO : Delete before presentation. Only used for debugging.
 import { toastController } from '@ionic/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -27,7 +28,8 @@ export class ProfilePage implements OnInit {
         private userService: UserService,
         private vendingMachineService: VendingMachineService,
         private platform: Platform,
-        private statusService: StatusService
+        private statusService: StatusService,
+        private router: Router
     ) {
         this.orders = [];
         this.historicOrders = [];
@@ -88,6 +90,16 @@ export class ProfilePage implements OnInit {
             },
             err => (environment.production) ? false : console.error(err.message)
         );
+    }
+
+    /**
+     * 
+     * @param order 
+     */
+    private pickupOrder(order: IOrder) {
+        this.router.navigate([
+            'demo', 'order', order.id, 'vendingmachine', order.vendingMachine.id
+        ]);
     }
 
     /**

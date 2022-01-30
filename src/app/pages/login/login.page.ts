@@ -21,9 +21,7 @@ export class LoginPage implements OnInit {
 
     login(creds: ICredential): void {
         this.authService.login(creds).subscribe(
-            data => {
-                this.tokenService.saveToken(data[environment.accessToken])
-            },
+            data => this.tokenService.saveToken(data[environment.accessToken]),
             err => this.errorStatus = err.status
         );
     }

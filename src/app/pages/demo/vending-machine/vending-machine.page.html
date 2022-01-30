@@ -8,11 +8,11 @@
     <ion-card>
         <ion-card-header>
             <ion-card-subtitle>
-                Distributeur numero {{ vendingMachine.uuid }}
+                Distributeur numero 123456789
             </ion-card-subtitle>
         </ion-card-header>
         <ion-grid>
-            <ion-row *ngFor="let line of vendingMachine.grid">
+            <ion-row *ngFor="let line of mockupGrid">
                 <ion-col *ngFor="let col of line">
                     <div class="locker">
                         {{ col.toUpperCase() }}

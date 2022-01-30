@@ -78,7 +78,10 @@
                             style="margin-top: 1em; margin-bottom: 1em;">
                             Details
                         </ion-button>
-                        <ion-button expand="block" [disabled]="!order.pickupToday" (click)='callHemengoScan()'>
+                        <ion-button 
+                            expand="block" 
+                            [disabled]="!order.pickupToday"
+                            (click)="pickupOrder(order)">
                             Récupérer commande
                         </ion-button>
                     </ion-card-content>
@@ -123,7 +126,7 @@
                             <ion-item>
                                 <ion-icon name="card-sharp" slot="start"></ion-icon>
                                 <ion-label>
-                                    {{ order.price }}€
+                                    {{ order.price }}€ TTC
                                 </ion-label>
                             </ion-item>
                             <ion-item>
