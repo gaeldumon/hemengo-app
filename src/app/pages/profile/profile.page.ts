@@ -5,6 +5,7 @@ import { IOrder } from 'src/app/interfaces/order';
 import { CityService } from 'src/app/services/city.service';
 import { OrderService } from 'src/app/services/order.service';
 import { VendingMachineService } from 'src/app/services/vending-machine.service';
+import { isToday } from 'src/app/helpers/util';
 
 @Component({
     selector: 'app-profile',
@@ -31,11 +32,13 @@ export class ProfilePage implements OnInit {
     }
 
     ngOnInit(): void {
-        this.orderService.getByUserId(this.userService.payload.id).subscribe(
+        this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.orders = res.orders;
 
                 this.orders.forEach((order, i) => {
+                    this.orders[i].pickupToday = isToday(order.pickupDate);
+
                     this.orderService.getProducts(order.id)
                         .subscribe(res => this.orders[i].products = res.products);
 
@@ -45,6 +48,28 @@ export class ProfilePage implements OnInit {
                                 this.orders[i].vendingMachine = res.machine;
                                 this.cityService.getById(res.machine.CityId)
                                     .subscribe(res => this.orders[i].city = res.city);
+                            }
+                        );
+                });
+            },
+            err => (environment.production) ? false : console.error(err.message)
+        );
+
+
+        this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
+            res => {
+                this.historicOrders = res.orders;
+
+                this.historicOrders.forEach((order, i) => {
+                    this.orderService.getProducts(order.id)
+                        .subscribe(res => this.historicOrders[i].products = res.products);
+
+                    this.vendingMachineService.getById(order.VendingMachineId)
+                        .subscribe(
+                            res => {
+                                this.historicOrders[i].vendingMachine = res.machine;
+                                this.cityService.getById(res.machine.CityId)
+                                    .subscribe(res => this.historicOrders[i].city = res.city);
                             }
                         );
                 });

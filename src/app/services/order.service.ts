@@ -15,8 +15,17 @@ export class OrderService {
      * @param userId 
      * @returns 
      */
-    public getByUserId(userId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.order}user/${userId}`);
+    public getActiveByUserId(userId: number): Observable<any> {
+        return this.http.get(`${environment.endpoint.order}user/${userId}/active`);
+    }
+
+    /**
+     * 
+     * @param userId 
+     * @returns 
+     */
+    public getArchiveByUserId(userId: number): Observable<any> {
+        return this.http.get(`${environment.endpoint.order}user/${userId}/archive`);
     }
 
     /**
