@@ -8,7 +8,7 @@ import { VendingMachineService } from 'src/app/services/vending-machine.service'
 import { StatusService } from 'src/app/services/status.service';
 import { isToday } from 'src/app/helpers/util';
 import { Platform } from '@ionic/angular';
-// TODO : Delete before presentation
+// TODO : Delete before presentation. Only used for debugging.
 import { toastController } from '@ionic/core';
 
 @Component({
@@ -26,7 +26,7 @@ export class ProfilePage implements OnInit {
         private orderService: OrderService,
         private userService: UserService,
         private vendingMachineService: VendingMachineService,
-        private platform: Platform,  
+        private platform: Platform,
         private statusService: StatusService
     ) {
         this.orders = [];
@@ -91,7 +91,7 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * 
+     * Retourne une date au format jour/mois/année.
      * @param date 
      * @returns 
      */
@@ -101,7 +101,26 @@ export class ProfilePage implements OnInit {
         return `${d.getDate()}/${month}/${d.getFullYear()}`;
     }
 
-    // TODO : Delete before presentation
+    /**
+     * Ouvre l'application (la main_activity ?) HemengoScanner lorsque nous
+     * sommes sur Android.
+     */
+    private callHemengoScan() {
+        if (this.platform.is('android')) {
+            this.toastSuccess("ON_ANDROID", 'log-out-outline');
+            window.open('android-app://com.example.hemengoscanner', "_system");
+        } else if (this.platform.is('desktop')) {
+            this.toastSuccess('ON_DESKTOP', 'log-out-outline');
+        } else {
+            this.toastSuccess("NOT_ANDROID_OR_DESKTOP", 'log-out-outline');
+        }
+    }
+
+    /**
+     * TODO : Delete before presentation. Only used for debugging.
+     * @param message 
+     * @param icon 
+     */
     async toastSuccess(message: string, icon: string) {
         const toast = await toastController.create({
             color: 'success',
@@ -111,16 +130,5 @@ export class ProfilePage implements OnInit {
         });
 
         await toast.present();
-    }
-
-    callHemengoScan() {
-        if (this.platform.is('android')) {
-            this.toastSuccess("on est sur android", 'log-out-outline');//à supprimer
-            window.open('android-app://com.example.hemengoscanner', "_system");//appelle l'appli hemengoScanner
-        } else if (this.platform.is('desktop')) {
-            this.toastSuccess('on est sur desktop', 'log-out-outline');//à supprimer
-        } else {
-            this.toastSuccess("on est ni sur android, ni sur desktop", 'log-out-outline')//à supprimer
-        }
     }
 }
