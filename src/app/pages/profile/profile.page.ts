@@ -5,9 +5,11 @@ import { IOrder } from 'src/app/interfaces/order';
 import { CityService } from 'src/app/services/city.service';
 import { OrderService } from 'src/app/services/order.service';
 import { VendingMachineService } from 'src/app/services/vending-machine.service';
+import { StatusService } from 'src/app/services/status.service';
 import { isToday } from 'src/app/helpers/util';
 import { Platform } from '@ionic/angular';
-import { toastController } from '@ionic/core'; //à supprimer, c'est juste pour les infos
+// TODO : Delete before presentation
+import { toastController } from '@ionic/core';
 
 @Component({
     selector: 'app-profile',
@@ -24,7 +26,8 @@ export class ProfilePage implements OnInit {
         private orderService: OrderService,
         private userService: UserService,
         private vendingMachineService: VendingMachineService,
-        private platform:Platform
+        private platform: Platform,  
+        private statusService: StatusService
     ) {
         this.orders = [];
         this.historicOrders = [];
@@ -41,6 +44,9 @@ export class ProfilePage implements OnInit {
 
                 this.orders.forEach((order, i) => {
                     this.orders[i].pickupToday = isToday(order.pickupDate);
+
+                    this.statusService.getById(order.StatusId)
+                        .subscribe(res => this.orders[i].status = res.status);
 
                     this.orderService.getProducts(order.id)
                         .subscribe(res => this.orders[i].products = res.products);
@@ -64,6 +70,9 @@ export class ProfilePage implements OnInit {
                 this.historicOrders = res.orders;
 
                 this.historicOrders.forEach((order, i) => {
+                    this.statusService.getById(order.StatusId)
+                        .subscribe(res => this.historicOrders[i].status = res.status);
+
                     this.orderService.getProducts(order.id)
                         .subscribe(res => this.historicOrders[i].products = res.products);
 
@@ -92,7 +101,7 @@ export class ProfilePage implements OnInit {
         return `${d.getDate()}/${month}/${d.getFullYear()}`;
     }
 
-    //fonction à supprimer quand on aura plus besoin du toast
+    // TODO : Delete before presentation
     async toastSuccess(message: string, icon: string) {
         const toast = await toastController.create({
             color: 'success',
