@@ -81,7 +81,7 @@
                         <ion-button 
                             expand="block" 
                             [disabled]="!order.pickupToday"
-                            (click)="pickupOrder(order)">
+                            (click)="callAppScanBasedOnPlatform(order)">
                             Récupérer commande
                         </ion-button>
                     </ion-card-content>

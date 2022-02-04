@@ -8,9 +8,9 @@ import { VendingMachineService } from 'src/app/services/vending-machine.service'
 import { StatusService } from 'src/app/services/status.service';
 import { isToday } from 'src/app/helpers/util';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 // TODO : Delete before presentation. Only used for debugging.
 import { toastController } from '@ionic/core';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-profile',
@@ -93,13 +93,35 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * 
+     * Navigue vers la page /demo, en passant l'id de la commande et l'id du
+     * distributeur de la commande en paramètre à la route.
      * @param order 
      */
-    private pickupOrder(order: IOrder) {
+    private gotoDemo(order: IOrder): void {
         this.router.navigate([
             'demo', 'order', order.id, 'vendingmachine', order.vendingMachine.id
         ]);
+    }
+
+    /**
+     * Ouvre l'application (la main_activity ?) HemengoScanner lorsque nous
+     * sommes sur Android.
+     */
+    private callAppScanBasedOnPlatform(order: IOrder) {
+        if (this.platform.is('android')) {
+
+            // Lancement HemengoScanner
+            window.open('android-app://com.example.hemengoscanner', "_system");
+            this.toastSuccess("ON_ANDROID", 'log-out-outline');
+
+        } else if (this.platform.is('desktop')) {
+
+            this.gotoDemo(order);
+            this.toastSuccess('ON_DESKTOP', 'log-out-outline');
+
+        } else {
+            this.toastSuccess("NOT_ANDROID_OR_DESKTOP", 'log-out-outline');
+        }
     }
 
     /**
@@ -111,21 +133,6 @@ export class ProfilePage implements OnInit {
         const d = new Date(date);
         const month = ((d.getMonth() + 1) < 9) ? "0" + (d.getMonth() + 1) : d.getMonth() + 1;
         return `${d.getDate()}/${month}/${d.getFullYear()}`;
-    }
-
-    /**
-     * Ouvre l'application (la main_activity ?) HemengoScanner lorsque nous
-     * sommes sur Android.
-     */
-    private callHemengoScan() {
-        if (this.platform.is('android')) {
-            this.toastSuccess("ON_ANDROID", 'log-out-outline');
-            window.open('android-app://com.example.hemengoscanner', "_system");
-        } else if (this.platform.is('desktop')) {
-            this.toastSuccess('ON_DESKTOP', 'log-out-outline');
-        } else {
-            this.toastSuccess("NOT_ANDROID_OR_DESKTOP", 'log-out-outline');
-        }
     }
 
     /**
