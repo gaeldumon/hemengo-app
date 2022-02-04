@@ -78,7 +78,7 @@
                             style="margin-top: 1em; margin-bottom: 1em;">
                             Details
                         </ion-button>
-                        <ion-button expand="block" [disabled]="!order.pickupToday">
+                        <ion-button expand="block" [disabled]="!order.pickupToday" (click)='callHemengoScan()'>
                             Récupérer commande
                         </ion-button>
                     </ion-card-content>
