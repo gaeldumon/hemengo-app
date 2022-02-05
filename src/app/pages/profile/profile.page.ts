@@ -9,7 +9,7 @@ import { StatusService } from 'src/app/services/status.service';
 import { isToday } from 'src/app/helpers/util';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-// TODO : Delete before presentation. Only used for debugging.
+// TODO : A supprimer avant soutenance. Utilisé pour debugger.
 import { toastController } from '@ionic/core';
 
 @Component({
@@ -119,6 +119,7 @@ export class ProfilePage implements OnInit {
      * plateforme actuelle. Il s'avère que sur un browser desktop les plateformes
      * sont : "mobile", "mobileweb" et "tablet" (et non desktop attention).
      * @see La documentation de this.plateform.is().
+     * TODO : Toasts a supprimer avant soutenance. Utilisé pour debugger.
      */
     private launchOrderPickupAction(order: IOrder) {
         if (this.platform.is('android')) {
@@ -149,7 +150,7 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * TODO : Delete before presentation. Only used for debugging.
+     * TODO : A supprimer avant soutenance. Utilisé pour debugger.
      * @param message 
      * @param icon 
      */
