@@ -7,18 +7,26 @@
 <ion-content>
     <ion-card>
         <ion-card-header>
+            <ion-card-title>
+                Distributeur de demonstration
+            </ion-card-title>
             <ion-card-subtitle>
-                Distributeur numero 123456789
+                UUID : {{ vendingMachine.uuid }}
             </ion-card-subtitle>
         </ion-card-header>
-        <ion-grid>
-            <ion-row *ngFor="let line of mockupGrid">
-                <ion-col *ngFor="let col of line">
-                    <div class="locker">
-                        {{ col.toUpperCase() }}
+        <ion-card-content>
+            <div class="vending-machine-container">
+                <div class="vending-machine-grid">
+                    <div class="vending-machine-lines" *ngFor="let line of mockupGrid">
+                        <div class="vending-machine-cols" *ngFor="let col of line">
+                            <p class="label">{{ col.toUpperCase() }}</p>
+                        </div>
                     </div>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+                </div>
+                <div class="qr-code-container">
+                    <img [src]="vendingMachine.qrCode" alt="QR Code">
+                </div>
+            </div>
+        </ion-card-content>
     </ion-card>
 </ion-content>

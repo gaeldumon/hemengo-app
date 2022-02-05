@@ -11,11 +11,20 @@ export class VendingMachineService {
     constructor(private http: HttpClient) { }
 
     /**
-     * 
+     * Retourne un distributeur.
      * @param id 
      * @returns 
      */
     public getById(id: number): Observable<any> {
         return this.http.get(`${environment.endpoint.vendingMachine}id/${id}`);
+    }
+
+    /**
+     * 
+     * @param name 
+     * @returns 
+     */
+    public getQrCodeSrc(name: string): string {
+        return `${environment.endpoint.upload}qrcode/${name}`;
     }
 }

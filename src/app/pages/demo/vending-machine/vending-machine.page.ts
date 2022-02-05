@@ -19,7 +19,35 @@ export class VendingMachinePage implements OnInit {
     constructor(
         private activatedRoute: ActivatedRoute,
         private vendingMachineService: VendingMachineService
-    ) { }
+    ) {
+        // Assignation naive en attendant d'implementer un async pipe
+        this.vendingMachine = {
+            id: 0,
+            uuid: "",
+            ref: "",
+            latitude: 0,
+            longitude: 0,
+            street: "",
+            maxLineCapacity: 0,
+            maxRowCapacity: 0,
+            qrCode: "",
+            CityId: 0
+        };
+
+        // Assignation naive en attendant d'implementer un async pipe
+        this.order = {
+            id: 0,
+            price: 0,
+            pickupDate: "",
+            pickupToday: false,
+            StatusId: 0,
+            status: null,
+            VendingMachineId: 0,
+            vendingMachine: null,
+            city: null,
+            products: null
+        }
+    }
 
     ngOnInit() {
         this.mockupGrid = [
@@ -36,9 +64,12 @@ export class VendingMachinePage implements OnInit {
             this.vendingMachineId = Number(params.get('vendingMachineId'));
         });
 
-        console.log({
-            orderId: this.orderId,
-            vendingMachineId: this.vendingMachineId
-        })
+        this.vendingMachineService.getById(this.vendingMachineId).subscribe(
+            res => {
+                this.vendingMachine = res.machine;
+                this.vendingMachine.qrCode = this.vendingMachineService.getQrCodeSrc(this.vendingMachine.uuid);
+            },
+            err => console.log(err)
+        );
     }
 }

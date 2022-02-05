@@ -1,5 +1,37 @@
-.locker {
-    height: 4em; 
-    background-color: cadetblue; 
-    color: white;
+.vending-machine-container {
+    display: flex;
+    flex-direction: row;
+
+    .qr-code-container {
+        margin-left: 2%;
+    }
+
+    .vending-machine-grid {
+        display: flex;
+        flex-direction: column;
+
+        .vending-machine-lines {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .vending-machine-cols {
+                width: 100px;
+                height: 50px;
+                background-color: cadetblue;
+
+                .label {
+                    color: white;
+                    font-weight: 600;
+                    padding: 0.5em;
+                }
+            }
+        }
+    }
+}
+
+.qr-code-container,
+.vending-machine-grid,
+.vending-machine-cols {
+    border: 0.2em solid black;
 }
