@@ -15,7 +15,7 @@
                 *ngFor="let order of orders; let i = index;" 
                 size="12" 
                 size-sm>
-                <ion-card>
+                <ion-card style="height:100%">
                     <ion-card-header>
                         <div 
                             [style.backgroundColor]="cardColor.primary" 
@@ -81,7 +81,7 @@
                         <ion-button 
                             expand="block" 
                             [disabled]="!order.pickupToday"
-                            (click)="callAppScanBasedOnPlatform(order)">
+                            (click)="launchOrderPickupAction(order)">
                             Récupérer commande
                         </ion-button>
                     </ion-card-content>
@@ -90,7 +90,7 @@
         </ion-row>
     </ion-grid>
 
-    <ion-item>
+    <ion-item style="margin-top: 2%;">
         <h1>Mon historique</h1>
     </ion-item>
 
@@ -100,7 +100,7 @@
                 *ngFor="let order of historicOrders; let i = index;" 
                 size="12" 
                 size-sm>
-                <ion-card>
+                <ion-card style="height:100%">
                     <ion-card-header>
                         <div 
                             [style.backgroundColor]="cardColor.secondary" 

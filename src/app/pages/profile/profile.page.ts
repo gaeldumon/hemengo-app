@@ -33,14 +33,20 @@ export class ProfilePage implements OnInit {
     ) {
         this.orders = [];
         this.historicOrders = [];
-        this.cardColor = {
-            primary: "#d9b791",
-            secondary: "#313c6e"
-        }
+        this.cardColor = { primary: "#d9b791", secondary: "#313c6e" }
     }
 
     ngOnInit(): void {
-        this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
+        this.setActiveOrders().then(() => console.log("active orders ok"));
+        this.setArchiveOrders().then(() => console.log("archive orders ok"));
+    }
+
+    /**
+     * 
+     * @returns 
+     */
+    async setActiveOrders() {
+        return this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.orders = res.orders;
 
@@ -65,9 +71,14 @@ export class ProfilePage implements OnInit {
             },
             err => (environment.production) ? false : console.error(err.message)
         );
+    }
 
-
-        this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
+    /**
+     * 
+     * @returns 
+     */
+    async setArchiveOrders() {
+        return this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.historicOrders = res.orders;
 
@@ -104,23 +115,25 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * Ouvre l'application (la main_activity ?) HemengoScanner lorsque nous
-     * sommes sur Android.
+     * Lance l'action aprés un clic sur récupérer commande en fonction de la 
+     * plateforme actuelle. Il s'avère que sur un browser desktop les plateformes
+     * sont : "mobile", "mobileweb" et "tablet" (et non desktop attention).
+     * @see La documentation de this.plateform.is().
      */
-    private callAppScanBasedOnPlatform(order: IOrder) {
+    private launchOrderPickupAction(order: IOrder) {
         if (this.platform.is('android')) {
 
             // Lancement HemengoScanner
             window.open('android-app://com.example.hemengoscanner', "_system");
             this.toastSuccess("ON_ANDROID", 'log-out-outline');
 
-        } else if (this.platform.is('desktop')) {
+        } else if (this.platform.is('mobileweb')) {
 
             this.gotoDemo(order);
-            this.toastSuccess('ON_DESKTOP', 'log-out-outline');
+            this.toastSuccess('ON_MOBILEWEB', 'log-out-outline');
 
         } else {
-            this.toastSuccess("NOT_ANDROID_OR_DESKTOP", 'log-out-outline');
+            this.toastSuccess("NOT_ANDROID_OR_MOBILEWEB", 'log-out-outline');
         }
     }
 
