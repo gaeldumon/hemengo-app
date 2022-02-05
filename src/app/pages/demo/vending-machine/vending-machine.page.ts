@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { IOrder } from 'src/app/interfaces/order';
 import { IVendingMachine } from 'src/app/interfaces/vendingMachine';
 import { VendingMachineService } from 'src/app/services/vending-machine.service';
+import { Animation, AnimationController } from '@ionic/angular';
 
 @Component({
     selector: 'app-vending-machine',
@@ -18,7 +19,8 @@ export class VendingMachinePage implements OnInit {
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private vendingMachineService: VendingMachineService
+        private vendingMachineService: VendingMachineService,
+        private animationController: AnimationController
     ) {
         // Assignation naive en attendant d'implementer un async pipe
         this.vendingMachine = {
@@ -67,9 +69,37 @@ export class VendingMachinePage implements OnInit {
         this.vendingMachineService.getById(this.vendingMachineId).subscribe(
             res => {
                 this.vendingMachine = res.machine;
-                this.vendingMachine.qrCode = this.vendingMachineService.getQrCodeSrc(this.vendingMachine.uuid);
+                this.vendingMachine.qrCode = this.vendingMachineService
+                    .getQrCodeSrc(this.vendingMachine.uuid);
             },
             err => console.log(err)
         );
+    }
+
+    ngAfterViewInit() {
+        this.animateUnlocking();
+    }
+
+    /**
+     * 
+     */
+    private animateUnlocking() {
+        const cols = Array.from(document.getElementsByClassName("vending-machine-cols"));
+        const orderLockers = ["A1", "A2", "D3", "E6"];
+        const foundLockers = orderLockers.map(ref => cols.find(el => el.textContent === ref));
+        const unlockAnim = this.animationController.create()
+            .addElement(foundLockers)
+            .fill('none')
+            .duration(1000)
+            .afterStyles({
+                background: 'rgba(0, 255, 0, 0.5)'
+            })
+            .keyframes([
+                { offset: 0, transform: 'scale(1) rotate(0)' },
+                { offset: 0.5, transform: 'scale(1.2) rotate(0)' },
+                { offset: 1, transform: 'scale(1) rotate(0)' }
+            ]);
+
+        unlockAnim.play();
     }
 }
