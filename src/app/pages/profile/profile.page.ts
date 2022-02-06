@@ -109,9 +109,7 @@ export class ProfilePage implements OnInit {
      * @param order 
      */
     private gotoDemo(order: IOrder): void {
-        this.router.navigate([
-            'demo', 'order', order.id, 'vendingmachine', order.vendingMachine.id
-        ]);
+        this.router.navigate(['demo', 'order', order.id]);
     }
 
     /**

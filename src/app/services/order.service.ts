@@ -12,6 +12,15 @@ export class OrderService {
 
     /**
      * 
+     * @param orderId 
+     * @returns 
+     */
+    public getById(orderId: number): Observable<any> {
+        return this.http.get(`${environment.endpoint.order}${orderId}`);
+    }
+
+    /**
+     * 
      * @param userId 
      * @returns 
      */

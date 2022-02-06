@@ -4,6 +4,8 @@ import { IOrder } from 'src/app/interfaces/order';
 import { IVendingMachine } from 'src/app/interfaces/vendingMachine';
 import { VendingMachineService } from 'src/app/services/vending-machine.service';
 import { Animation, AnimationController } from '@ionic/angular';
+import { OrderService } from 'src/app/services/order.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
     selector: 'app-vending-machine',
@@ -11,19 +13,36 @@ import { Animation, AnimationController } from '@ionic/angular';
     styleUrls: ['./vending-machine.page.scss'],
 })
 export class VendingMachinePage implements OnInit {
+    /**
+     * L'id de la commande, envoyé lors du routage depuis /profile.
+     */
     private orderId: number;
-    private vendingMachineId: number;
-    private vendingMachine: IVendingMachine;
+    /**
+     * La commande en train d'être récupérée.
+     */
     private order: IOrder;
-    private mockupGrid: string[][];
+    /**
+     * Le distributeur de la commande.
+     */
+    private machine: IVendingMachine;
+    /**
+     * Grille tableau 2D permettant de representer un distributeur graphiquement.
+     */
+    private grid: string[][];
+    /**
+     * Tableau permettant de faire concorder reference des casiers et produits.
+     */
+    private productRefAssoc: object[];
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private vendingMachineService: VendingMachineService,
+        private machineService: VendingMachineService,
+        private orderService: OrderService,
+        private productService: ProductService,
         private animationController: AnimationController
     ) {
         // Assignation naive en attendant d'implementer un async pipe
-        this.vendingMachine = {
+        this.machine = {
             id: 0,
             uuid: "",
             ref: "",
@@ -49,30 +68,57 @@ export class VendingMachinePage implements OnInit {
             city: null,
             products: null
         }
+
+        this.grid = [
+            ["a1", "a2", "a3", "a4", "a5", "a6"],
+            ["b1", "b2", "b3", "b4", "b5", "b6"],
+            ["c1", "c2", "c3", "c4", "c5", "c6"],
+            ["d1", "d2", "d3", "d4", "d5", "d6"],
+            ["e1", "e2", "e3", "e4", "e5", "e6"]
+        ];
+
+        this.productRefAssoc = [];
     }
 
     ngOnInit() {
-        this.mockupGrid = [
-            ["a1", "b1", "c1", "d1", "e1"],
-            ["a2", "b2", "c2", "d2", "e2"],
-            ["a3", "b3", "c3", "d3", "e3"],
-            ["a4", "b4", "c4", "d4", "e4"],
-            ["a5", "b5", "c5", "d5", "e5"],
-            ["a6", "b6", "c6", "d6", "e6"]
-        ];
-
         this.activatedRoute.paramMap.subscribe(params => {
             this.orderId = Number(params.get('orderId'));
-            this.vendingMachineId = Number(params.get('vendingMachineId'));
         });
 
-        this.vendingMachineService.getById(this.vendingMachineId).subscribe(
+        this.orderService.getById(this.orderId).subscribe(
             res => {
-                this.vendingMachine = res.machine;
-                this.vendingMachine.qrCode = this.vendingMachineService
-                    .getQrCodeSrc(this.vendingMachine.uuid);
-            },
-            err => console.log(err)
+                // La commande actuelle que l'utilisateur vient récupérer
+                this.order = res.order;
+                // A cette commande on y accroche les produits
+                this.orderService.getProducts(this.order.id).subscribe(
+                    res => this.order.products = res.products
+                );
+
+                // On va chercher le distributeur associé à cette commande
+                this.machineService.getById(this.order.VendingMachineId).subscribe(
+                    res => {
+                        // Le distributeur associé a cette commande
+                        this.machine = res.machine;
+                        // Le QR Code de ce distributeur
+                        this.machine.qrCode = this.machineService.getQrCodeSrc(this.machine.uuid);
+                        // On va chercher tous les casiers de ce distributeur
+                        this.machineService.getLockers(this.machine.id).subscribe(
+                            res => {
+                                // Pour chaque casier on va chercher le produit associé
+                                res.lockers.forEach(locker => {
+                                    this.productService.getById(locker.ProductId).subscribe(
+                                        res => this.productRefAssoc.push({
+                                            locker, product: res.product
+                                        })
+                                    );
+                                });
+                            },
+                            err => console.log(err)
+                        );
+                    },
+                    err => console.log(err)
+                );
+            }
         );
     }
 
@@ -82,6 +128,17 @@ export class VendingMachinePage implements OnInit {
 
     /**
      * 
+     * @param refs 
+     * @returns 
+     */
+    private makeGrid(refs: string[]): string[][] {
+        const grid = [];
+        while (refs.length) grid.push(refs.splice(0, 6));
+        return grid;
+    }
+
+    /**
+     * Lance l'animation d'ouverture des casiers de la commande.
      */
     private animateUnlocking() {
         const cols = Array.from(document.getElementsByClassName("vending-machine-cols"));

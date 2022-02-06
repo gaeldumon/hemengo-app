@@ -11,20 +11,20 @@
                 Distributeur de demonstration
             </ion-card-title>
             <ion-card-subtitle>
-                UUID : {{ vendingMachine.uuid }}
+                UUID : {{ machine.uuid }}
             </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
             <div class="vending-machine-container">
                 <div class="vending-machine-grid">
-                    <div class="vending-machine-lines" *ngFor="let line of mockupGrid">
+                    <div class="vending-machine-lines" *ngFor="let line of grid">
                         <div class="vending-machine-cols" *ngFor="let col of line">
                             <p class="label">{{ col.toUpperCase() }}</p>
                         </div>
                     </div>
                 </div>
                 <div class="qr-code-container">
-                    <img [src]="vendingMachine.qrCode" alt="QR Code">
+                    <img [src]="machine.qrCode" alt="QR Code">
                 </div>
             </div>
         </ion-card-content>

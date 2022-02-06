@@ -19,7 +19,7 @@ const routes: Routes = [
                     .then(m => m.ProfilePageModule), canActivate: [AuthGuard]
             },
             {
-                path: 'demo/order/:orderId/vendingmachine/:vendingMachineId',
+                path: 'demo/order/:orderId',
                 loadChildren: () => import('./pages/demo/vending-machine/vending-machine.module')
                     .then(m => m.VendingMachinePageModule), canActivate: [AuthGuard]
             },
