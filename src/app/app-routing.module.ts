@@ -5,6 +5,7 @@ import { UserGuard } from './helpers/user.guard';
 import { LayoutComponent } from './components/layout/layout.component';
 
 const routes: Routes = [
+    // Route par défaut
     {
         path: '',
         redirectTo: 'hello',
@@ -18,7 +19,7 @@ const routes: Routes = [
                     .then(m => m.ProfilePageModule), canActivate: [AuthGuard]
             },
             {
-                path: 'demo',
+                path: 'demo/order/:orderId',
                 loadChildren: () => import('./pages/demo/vending-machine/vending-machine.module')
                     .then(m => m.VendingMachinePageModule), canActivate: [AuthGuard]
             },

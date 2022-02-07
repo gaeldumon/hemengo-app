@@ -15,7 +15,7 @@
                 *ngFor="let order of orders; let i = index;" 
                 size="12" 
                 size-sm>
-                <ion-card>
+                <ion-card style="height:100%">
                     <ion-card-header>
                         <div 
                             [style.backgroundColor]="cardColor.primary" 
@@ -78,7 +78,10 @@
                             style="margin-top: 1em; margin-bottom: 1em;">
                             Details
                         </ion-button>
-                        <ion-button expand="block" [disabled]="!order.pickupToday" (click)='callHemengoScan()'>
+                        <ion-button 
+                            expand="block" 
+                            [disabled]="!order.pickupToday"
+                            (click)="launchOrderPickupAction(order)">
                             Récupérer commande
                         </ion-button>
                     </ion-card-content>
@@ -87,7 +90,7 @@
         </ion-row>
     </ion-grid>
 
-    <ion-item>
+    <ion-item style="margin-top: 2%;">
         <h1>Mon historique</h1>
     </ion-item>
 
@@ -97,7 +100,7 @@
                 *ngFor="let order of historicOrders; let i = index;" 
                 size="12" 
                 size-sm>
-                <ion-card>
+                <ion-card style="height:100%">
                     <ion-card-header>
                         <div 
                             [style.backgroundColor]="cardColor.secondary" 
@@ -123,7 +126,7 @@
                             <ion-item>
                                 <ion-icon name="card-sharp" slot="start"></ion-icon>
                                 <ion-label>
-                                    {{ order.price }}€
+                                    {{ order.price }}€ TTC
                                 </ion-label>
                             </ion-item>
                             <ion-item>

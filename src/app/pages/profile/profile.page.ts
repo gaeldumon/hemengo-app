@@ -8,7 +8,8 @@ import { VendingMachineService } from 'src/app/services/vending-machine.service'
 import { StatusService } from 'src/app/services/status.service';
 import { isToday } from 'src/app/helpers/util';
 import { Platform } from '@ionic/angular';
-// TODO : Delete before presentation. Only used for debugging.
+import { Router } from '@angular/router';
+// TODO : A supprimer avant soutenance. Utilisé pour debugger.
 import { toastController } from '@ionic/core';
 
 @Component({
@@ -27,18 +28,25 @@ export class ProfilePage implements OnInit {
         private userService: UserService,
         private vendingMachineService: VendingMachineService,
         private platform: Platform,
-        private statusService: StatusService
+        private statusService: StatusService,
+        private router: Router
     ) {
         this.orders = [];
         this.historicOrders = [];
-        this.cardColor = {
-            primary: "#d9b791",
-            secondary: "#313c6e"
-        }
+        this.cardColor = { primary: "#d9b791", secondary: "#313c6e" }
     }
 
     ngOnInit(): void {
-        this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
+        this.setActiveOrders().then(() => console.log("active orders ok"));
+        this.setArchiveOrders().then(() => console.log("archive orders ok"));
+    }
+
+    /**
+     * 
+     * @returns 
+     */
+    async setActiveOrders() {
+        return this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.orders = res.orders;
 
@@ -63,9 +71,14 @@ export class ProfilePage implements OnInit {
             },
             err => (environment.production) ? false : console.error(err.message)
         );
+    }
 
-
-        this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
+    /**
+     * 
+     * @returns 
+     */
+    async setArchiveOrders() {
+        return this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.historicOrders = res.orders;
 
@@ -91,6 +104,39 @@ export class ProfilePage implements OnInit {
     }
 
     /**
+     * Navigue vers la page /demo, en passant l'id de la commande et l'id du
+     * distributeur de la commande en paramètre à la route.
+     * @param order 
+     */
+    private gotoDemo(order: IOrder): void {
+        this.router.navigate(['demo', 'order', order.id]);
+    }
+
+    /**
+     * Lance l'action aprés un clic sur récupérer commande en fonction de la 
+     * plateforme actuelle. Il s'avère que sur un browser desktop les plateformes
+     * sont : "mobile", "mobileweb" et "tablet" (et non desktop attention).
+     * @see La documentation de this.plateform.is().
+     * TODO : Toasts a supprimer avant soutenance. Utilisé pour debugger.
+     */
+    private launchOrderPickupAction(order: IOrder) {
+        if (this.platform.is('android')) {
+
+            // Lancement HemengoScanner
+            window.open('android-app://com.example.hemengoscanner', "_system");
+            this.toastSuccess("ON_ANDROID", 'log-out-outline');
+
+        } else if (this.platform.is('mobileweb')) {
+
+            this.gotoDemo(order);
+            this.toastSuccess('ON_MOBILEWEB', 'log-out-outline');
+
+        } else {
+            this.toastSuccess("NOT_ANDROID_OR_MOBILEWEB", 'log-out-outline');
+        }
+    }
+
+    /**
      * Retourne une date au format jour/mois/année.
      * @param date 
      * @returns 
@@ -102,22 +148,7 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * Ouvre l'application (la main_activity ?) HemengoScanner lorsque nous
-     * sommes sur Android.
-     */
-    private callHemengoScan() {
-        if (this.platform.is('android')) {
-            this.toastSuccess("ON_ANDROID", 'log-out-outline');
-            window.open('android-app://com.example.hemengoscanner', "_system");
-        } else if (this.platform.is('desktop')) {
-            this.toastSuccess('ON_DESKTOP', 'log-out-outline');
-        } else {
-            this.toastSuccess("NOT_ANDROID_OR_DESKTOP", 'log-out-outline');
-        }
-    }
-
-    /**
-     * TODO : Delete before presentation. Only used for debugging.
+     * TODO : A supprimer avant soutenance. Utilisé pour debugger.
      * @param message 
      * @param icon 
      */

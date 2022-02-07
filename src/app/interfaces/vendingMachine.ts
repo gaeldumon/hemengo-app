@@ -7,6 +7,6 @@ export interface IVendingMachine {
     street: string,
     maxLineCapacity: number,
     maxRowCapacity: number,
-    qrCodeFileName: string | null,
+    qrCode: string | null,
     CityId: number
 }

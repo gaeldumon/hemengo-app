@@ -12,6 +12,7 @@ export const environment = {
         order: "http://localhost:3000/order/",
         city: "http://localhost:3000/city/",
         status: "http://localhost:3000/status/",
+        product: "http://localhost:3000/product/",
         vendingMachine: "http://localhost:3000/vendingmachine/"
     }
 };
