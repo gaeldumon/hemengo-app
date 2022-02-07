@@ -6,6 +6,7 @@ import { VendingMachineService } from 'src/app/services/vending-machine.service'
 import { Animation, AnimationController } from '@ionic/angular';
 import { OrderService } from 'src/app/services/order.service';
 import { ProductService } from 'src/app/services/product.service';
+import { LoginPage } from '../../login/login.page';
 
 @Component({
     selector: 'app-vending-machine',
@@ -32,7 +33,7 @@ export class VendingMachinePage implements OnInit {
     /**
      * Tableau permettant de faire concorder reference des casiers et produits.
      */
-    private productRefAssoc: object[];
+    private productRefAssoc;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -104,6 +105,7 @@ export class VendingMachinePage implements OnInit {
                         // On va chercher tous les casiers de ce distributeur
                         this.machineService.getLockers(this.machine.id).subscribe(
                             res => {
+
                                 // Pour chaque casier on va chercher le produit associé
                                 res.lockers.forEach(locker => {
                                     this.productService.getById(locker.ProductId).subscribe(
@@ -112,11 +114,17 @@ export class VendingMachinePage implements OnInit {
                                         })
                                     );
                                 });
-                            },
-                            err => console.log(err)
+
+                                const orderProductsIds = this.order.products.map(p => p.id);
+                                const filtAssoc = this.productRefAssoc.filter(a => orderProductsIds.includes(a.product.ProductId));
+                                // A passer à l'animation
+                                const refsToUnlock = filtAssoc.map(a => a.locker.MatrixElementRef);
+                                // Mais vide, car productRefAssoc semble être assimilé comme vide
+                                // alors qu'il ne l'est pas...
+                                console.log(refsToUnlock);
+                            }
                         );
-                    },
-                    err => console.log(err)
+                    }
                 );
             }
         );
