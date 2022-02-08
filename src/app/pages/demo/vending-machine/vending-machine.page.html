@@ -24,7 +24,12 @@
                     </div>
                 </div>
                 <div class="qr-code-container">
-                    <img [src]="machine.qrCode" alt="QR Code">
+                    <div>
+                        <img [src]="machine.qrCode" alt="QR Code">
+                    </div>
+                    <ion-button (click)="launchUnlocking()" size="small">
+                        Scan distrib
+                    </ion-button>
                 </div>
             </div>
         </ion-card-content>

@@ -37,16 +37,16 @@ export class ProfilePage implements OnInit {
     }
 
     ngOnInit(): void {
-        this.setActiveOrders().then(() => console.log("active orders ok"));
-        this.setArchiveOrders().then(() => console.log("archive orders ok"));
+        this.setActiveOrders();
+        this.setArchiveOrders();
     }
 
     /**
      * 
      * @returns 
      */
-    async setActiveOrders() {
-        return this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
+    private setActiveOrders() {
+        this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.orders = res.orders;
 
@@ -77,8 +77,8 @@ export class ProfilePage implements OnInit {
      * 
      * @returns 
      */
-    async setArchiveOrders() {
-        return this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
+    private setArchiveOrders() {
+        this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
             res => {
                 this.historicOrders = res.orders;
 
@@ -104,35 +104,17 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * Navigue vers la page /demo, en passant l'id de la commande et l'id du
-     * distributeur de la commande en paramètre à la route.
-     * @param order 
-     */
-    private gotoDemo(order: IOrder): void {
-        this.router.navigate(['demo', 'order', order.id]);
-    }
-
-    /**
      * Lance l'action aprés un clic sur récupérer commande en fonction de la 
-     * plateforme actuelle. Il s'avère que sur un browser desktop les plateformes
-     * sont : "mobile", "mobileweb" et "tablet" (et non desktop attention).
+     * plateforme actuelle. TODO: toast a supprimer avant soutenance. Utilisé pour debugger.
      * @see La documentation de this.plateform.is().
-     * TODO : Toasts a supprimer avant soutenance. Utilisé pour debugger.
      */
     private launchOrderPickupAction(order: IOrder) {
         if (this.platform.is('android')) {
-
-            // Lancement HemengoScanner
             window.open('android-app://com.example.hemengoscanner', "_system");
-            this.toastSuccess("ON_ANDROID", 'log-out-outline');
-
-        } else if (this.platform.is('mobileweb')) {
-
-            this.gotoDemo(order);
-            this.toastSuccess('ON_MOBILEWEB', 'log-out-outline');
-
+            this.toastSuccess("SUR ANDROID", 'log-out-outline');
         } else {
-            this.toastSuccess("NOT_ANDROID_OR_MOBILEWEB", 'log-out-outline');
+            this.router.navigate(['demo', 'order', order.id]);
+            this.toastSuccess('PAS SUR ANDROID', 'log-out-outline');
         }
     }
 
@@ -152,7 +134,7 @@ export class ProfilePage implements OnInit {
      * @param message 
      * @param icon 
      */
-    async toastSuccess(message: string, icon: string) {
+    private async toastSuccess(message: string, icon: string) {
         const toast = await toastController.create({
             color: 'success',
             duration: 2000,

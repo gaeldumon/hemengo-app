@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
     constructor(private userService: UserService) {
         this.appPages = [
             { title: "Mon profil", url: "/profile", icon: "home" },
-            { title: "Demo", url: "/demo", icon: "cube" },
+            { title: "Demo", url: "/demo", icon: "cube", disabled: true },
             { title: "Deconnexion", url: "/logout", icon: "exit" }
         ];
 
