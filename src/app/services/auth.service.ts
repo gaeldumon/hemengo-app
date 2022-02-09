@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
-import { ICredential } from '../interfaces/credential';
-import { IToken } from '../interfaces/token';
-import { environment } from '../../environments/environment';
+
+import { ICredential } from 'src/app/interfaces/credential';
+import { IToken } from 'src/app/interfaces/token';
+
+import { environment } from 'src/environments/environment';
+
 
 @Injectable({
     providedIn: 'root'
@@ -18,7 +22,7 @@ export class AuthService {
      * @returns 
      */
     login(credentials: ICredential): Observable<IToken> {
-        return this.http.post<IToken>(environment.endpoint.auth + "login", credentials)
+        return this.http.post<IToken>(`${environment.endpoint.auth}login`, credentials)
     }
 
     /**
@@ -27,6 +31,6 @@ export class AuthService {
      * @returns 
      */
     register(credentials: ICredential): Observable<IToken> {
-        return this.http.post<IToken>(environment.endpoint.auth + "register", credentials)
+        return this.http.post<IToken>(`${environment.endpoint.auth}register`, credentials)
     }
 }

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+
 import { TokenService } from './services/token.service';
+
 
 @Component({
     selector: 'app-root',
@@ -10,5 +12,5 @@ export class AppComponent {
 
     constructor(private tokenService: TokenService) { }
 
-    ngOnInit(): void { }
+    ngOnInit() { }
 }

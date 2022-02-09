@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
+import { IOrder } from 'src/app/interfaces/order';
+import { IProduct } from 'src/app/interfaces/product';
+
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +21,10 @@ export class OrderService {
      * @param orderId 
      * @returns 
      */
-    public getById(orderId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.order}${orderId}`);
+    public getById(orderId: number): Observable<{ order: IOrder }> {
+        return this.http.get<{ order: IOrder }>(
+            `${environment.endpoint.order}${orderId}`
+        );
     }
 
     /**
@@ -24,8 +32,10 @@ export class OrderService {
      * @param userId 
      * @returns 
      */
-    public getActiveByUserId(userId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.order}user/${userId}/active`);
+    public getActiveByUserId(userId: number): Observable<{ orders: IOrder[] }> {
+        return this.http.get<{ orders: IOrder[] }>(
+            `${environment.endpoint.order}user/${userId}/active`
+        );
     }
 
     /**
@@ -33,8 +43,10 @@ export class OrderService {
      * @param userId 
      * @returns 
      */
-    public getArchiveByUserId(userId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.order}user/${userId}/archive`);
+    public getArchiveByUserId(userId: number): Observable<{ orders: IOrder[] }> {
+        return this.http.get<{ orders: IOrder[] }>(
+            `${environment.endpoint.order}user/${userId}/archive`
+        );
     }
 
     /**
@@ -42,8 +54,10 @@ export class OrderService {
      * @param orderId 
      * @returns 
      */
-    public getProducts(orderId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.order}${orderId}/products`);
+    public getProducts(orderId: number): Observable<{ products: IProduct[] }> {
+        return this.http.get<{ products: IProduct[] }>(
+            `${environment.endpoint.order}${orderId}/products`
+        );
     }
 
     /**

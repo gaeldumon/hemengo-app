@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TokenService } from 'src/app/services/token.service';
+
 import { toastController } from '@ionic/core';
+
+import { TokenService } from 'src/app/services/token.service';
+
 
 @Component({
     selector: 'app-logout',

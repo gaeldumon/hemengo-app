@@ -1,16 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/services/user.service';
-import { environment } from 'src/environments/environment';
-import { IOrder } from 'src/app/interfaces/order';
-import { CityService } from 'src/app/services/city.service';
-import { OrderService } from 'src/app/services/order.service';
-import { VendingMachineService } from 'src/app/services/vending-machine.service';
-import { StatusService } from 'src/app/services/status.service';
-import { isToday } from 'src/app/helpers/util';
-import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
-// TODO : A supprimer avant soutenance. Utilisé pour debugger.
+
 import { toastController } from '@ionic/core';
+import { Platform } from '@ionic/angular';
+
+import { UserService } from 'src/app/services/user.service';
+import { OrderService } from 'src/app/services/order.service';
+import { CityService } from 'src/app/services/city.service';
+import { StatusService } from 'src/app/services/status.service';
+import { VendingMachineService } from 'src/app/services/vending-machine.service';
+
+import { IOrder } from 'src/app/interfaces/order';
+
+import { environment } from 'src/environments/environment';
+import { isToday } from 'src/app/helpers/util';
+
 
 @Component({
     selector: 'app-profile',
@@ -19,7 +23,7 @@ import { toastController } from '@ionic/core';
 })
 export class ProfilePage implements OnInit {
     private orders: IOrder[];
-    private historicOrders: IOrder[];
+    private archiveOrders: IOrder[];
     private cardColor: object;
 
     constructor(
@@ -32,7 +36,7 @@ export class ProfilePage implements OnInit {
         private router: Router
     ) {
         this.orders = [];
-        this.historicOrders = [];
+        this.archiveOrders = [];
         this.cardColor = { primary: "#d9b791", secondary: "#313c6e" }
     }
 
@@ -46,31 +50,32 @@ export class ProfilePage implements OnInit {
      * @returns 
      */
     private setActiveOrders() {
-        this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(
-            res => {
-                this.orders = res.orders;
+        this.orderService.getActiveByUserId(this.userService.payload.id).subscribe(res => {
+            this.orders = res.orders;
 
-                this.orders.forEach((order, i) => {
-                    this.orders[i].pickupToday = isToday(order.pickupDate);
+            this.orders.forEach((order, i) => {
+                this.orders[i].pickupToday = isToday(order.pickupDate);
 
-                    this.statusService.getById(order.StatusId)
-                        .subscribe(res => this.orders[i].status = res.status);
-
-                    this.orderService.getProducts(order.id)
-                        .subscribe(res => this.orders[i].products = res.products);
-
-                    this.vendingMachineService.getById(order.VendingMachineId)
-                        .subscribe(
-                            res => {
-                                this.orders[i].vendingMachine = res.machine;
-                                this.cityService.getById(res.machine.CityId)
-                                    .subscribe(res => this.orders[i].city = res.city);
-                            }
-                        );
+                this.statusService.getById(order.StatusId).subscribe(res => {
+                    this.orders[i].status = res.status;
                 });
-            },
-            err => (environment.production) ? false : console.error(err.message)
-        );
+
+                this.orderService.getProducts(order.id).subscribe(res => {
+                    this.orders[i].products = res.products;
+                });
+
+                this.vendingMachineService.getById(order.VendingMachineId).subscribe(res => {
+                    this.orders[i].vendingMachine = res.machine;
+
+                    this.cityService.getById(res.machine.CityId).subscribe(res => {
+                        this.orders[i].city = res.city
+                    });
+                });
+            });
+        },
+            err => {
+                (environment.production) ? false : console.error(err.message);
+            });
     }
 
     /**
@@ -78,29 +83,32 @@ export class ProfilePage implements OnInit {
      * @returns 
      */
     private setArchiveOrders() {
-        this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(
-            res => {
-                this.historicOrders = res.orders;
+        this.orderService.getArchiveByUserId(this.userService.payload.id).subscribe(res => {
+            this.archiveOrders = res.orders;
 
-                this.historicOrders.forEach((order, i) => {
-                    this.statusService.getById(order.StatusId)
-                        .subscribe(res => this.historicOrders[i].status = res.status);
+            this.archiveOrders.forEach((order, i) => {
+                this.archiveOrders[i].pickupToday = isToday(order.pickupDate);
 
-                    this.orderService.getProducts(order.id)
-                        .subscribe(res => this.historicOrders[i].products = res.products);
-
-                    this.vendingMachineService.getById(order.VendingMachineId)
-                        .subscribe(
-                            res => {
-                                this.historicOrders[i].vendingMachine = res.machine;
-                                this.cityService.getById(res.machine.CityId)
-                                    .subscribe(res => this.historicOrders[i].city = res.city);
-                            }
-                        );
+                this.statusService.getById(order.StatusId).subscribe(res => {
+                    this.archiveOrders[i].status = res.status;
                 });
-            },
-            err => (environment.production) ? false : console.error(err.message)
-        );
+
+                this.orderService.getProducts(order.id).subscribe(res => {
+                    this.archiveOrders[i].products = res.products;
+                });
+
+                this.vendingMachineService.getById(order.VendingMachineId).subscribe(res => {
+                    this.archiveOrders[i].vendingMachine = res.machine;
+
+                    this.cityService.getById(res.machine.CityId).subscribe(res => {
+                        this.archiveOrders[i].city = res.city
+                    });
+                });
+            });
+        },
+            err => {
+                (environment.production) ? false : console.error(err.message);
+            });
     }
 
     /**
