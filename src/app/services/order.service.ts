@@ -45,4 +45,16 @@ export class OrderService {
     public getProducts(orderId: number): Observable<any> {
         return this.http.get(`${environment.endpoint.order}${orderId}/products`);
     }
+
+    /**
+     * 
+     * @param payload 
+     * @returns 
+     */
+    public updateStatus(orderId: number, statusId: number): Observable<any> {
+        return this.http.patch<any>(
+            `${environment.endpoint.order}${orderId}`,
+            { StatusId: statusId }
+        );
+    }
 }
