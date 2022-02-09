@@ -31,11 +31,13 @@ export class VendingMachinePage implements OnInit {
     private machine: IVendingMachine;
     /**
      * Grille tableau 2D permettant de representer un distributeur graphiquement.
+     * TODO: typage en ILocker[][]
      */
     private grid: string[][];
     /**
      * Tableau permettant de faire concorder reference des casiers et produits
-     * dans chaque casiers. Tableau d'objets ILocker (à créer) et IProduct !
+     * dans chaque casiers.
+     * TODO: typage en [[ ILocker, IProduct ]]
      */
     private productRefAssoc;
 
@@ -177,9 +179,9 @@ export class VendingMachinePage implements OnInit {
         await this.animateUnlocking(lockersToUnlock);
 
         // Passer la commande en statut "retrieved" (id 4)
-        // this.orderService.isRetrieved(this.order.id).subscribe(res => {
-        //      Afficher toast message de succés et rediriger vers profile
-        // })
+        this.orderService.toStatusIsRetrieved(this.order.id).subscribe(res => {
+            // Afficher toast message de succés et rediriger vers profile
+        })
     }
 
     /**

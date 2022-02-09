@@ -51,10 +51,10 @@ export class OrderService {
      * @param payload 
      * @returns 
      */
-    public updateStatus(orderId: number, statusId: number): Observable<any> {
+    public toStatusIsRetrieved(orderId: number): Observable<any> {
         return this.http.patch<any>(
             `${environment.endpoint.order}${orderId}`,
-            { StatusId: statusId }
+            { StatusId: 4 }
         );
     }
 }
