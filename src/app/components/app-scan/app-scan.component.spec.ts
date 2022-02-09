@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { AppScanComponent } from './app-scan.component';
 
+
 describe('AppScanComponent', () => {
     let component: AppScanComponent;
     let fixture: ComponentFixture<AppScanComponent>;

@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ICredential } from 'src/app/interfaces/credential';
+
+import { environment } from 'src/environments/environment';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { TokenService } from 'src/app/services/token.service';
-import { environment } from 'src/environments/environment';
+
 
 @Component({
     selector: 'app-register',

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { IUser } from 'src/app/interfaces/user';
+
 import { TokenService } from 'src/app/services/token.service';
 import { UserService } from 'src/app/services/user.service';
+
 
 @Component({
     selector: 'app-dashboard',

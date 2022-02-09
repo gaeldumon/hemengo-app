@@ -8,6 +8,7 @@ import { SplashPageRoutingModule } from './splash-routing.module';
 
 import { SplashPage } from './splash.page';
 
+
 @NgModule({
     imports: [
         CommonModule,

@@ -1,10 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
+
 import { TokenService } from './token.service';
-import { ICredentialPayload } from '../interfaces/credential';
-import { IUser } from '../interfaces/user';
+
+import { ICredentialPayload } from 'src/app/interfaces/credential';
+import { IUser } from 'src/app/interfaces/user';
+
 import { environment } from 'src/environments/environment';
+
 
 @Injectable({
     providedIn: 'root'
@@ -43,7 +48,7 @@ export class UserService {
      * @param id 
      * @returns 
      */
-    public getOne(userId: number): Observable<any> {
-        return this.http.get<IUser>(environment.endpoint.user + userId);
+    public getOne(userId: number): Observable<{ user: IUser }> {
+        return this.http.get<{ user: IUser }>(environment.endpoint.user + userId);
     }
 }

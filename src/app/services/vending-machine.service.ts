@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
+
 import { environment } from 'src/environments/environment';
+
+import { IVendingMachine } from 'src/app/interfaces/vendingMachine';
+import { ILocker } from 'src/app/interfaces/locker';
+
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +21,10 @@ export class VendingMachineService {
      * @param id 
      * @returns 
      */
-    public getById(id: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.vendingMachine}${id}`);
+    public getById(id: number): Observable<{ machine: IVendingMachine }> {
+        return this.http.get<{ machine: IVendingMachine }>(
+            `${environment.endpoint.vendingMachine}${id}`
+        );
     }
 
     /**
@@ -24,8 +32,10 @@ export class VendingMachineService {
      * @param machineId 
      * @returns 
      */
-    public getLockers(machineId: number): Observable<any> {
-        return this.http.get(`${environment.endpoint.vendingMachine}${machineId}/lockers`);
+    public getLockers(machineId: number): Observable<{ lockers: ILocker[] }> {
+        return this.http.get<{ lockers: ILocker[] }>(
+            `${environment.endpoint.vendingMachine}${machineId}/lockers`
+        );
     }
 
     /**

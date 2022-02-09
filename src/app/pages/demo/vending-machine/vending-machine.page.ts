@@ -11,6 +11,7 @@ import { VendingMachineService } from 'src/app/services/vending-machine.service'
 import { IOrder } from 'src/app/interfaces/order';
 import { IVendingMachine } from 'src/app/interfaces/vendingMachine';
 
+
 @Component({
     selector: 'app-vending-machine',
     templateUrl: './vending-machine.page.html',
@@ -179,9 +180,9 @@ export class VendingMachinePage implements OnInit {
         await this.animateUnlocking(lockersToUnlock);
 
         // Passer la commande en statut "retrieved" (id 4)
-        this.orderService.toStatusIsRetrieved(this.order.id).subscribe(res => {
+        // this.orderService.toStatusIsRetrieved(this.order.id).subscribe(res => {
             // Afficher toast message de succés et rediriger vers profile
-        })
+        // })
     }
 
     /**

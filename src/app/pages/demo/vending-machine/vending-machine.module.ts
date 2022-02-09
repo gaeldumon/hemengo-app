@@ -8,6 +8,7 @@ import { VendingMachinePageRoutingModule } from './vending-machine-routing.modul
 
 import { VendingMachinePage } from './vending-machine.page';
 
+
 @NgModule({
     imports: [
         CommonModule,
