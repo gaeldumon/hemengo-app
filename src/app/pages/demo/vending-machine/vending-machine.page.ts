@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { AnimationController } from '@ionic/angular';
 import { loadingController } from '@ionic/core';
@@ -10,6 +10,8 @@ import { VendingMachineService } from 'src/app/services/vending-machine.service'
 
 import { IOrder } from 'src/app/interfaces/order';
 import { IVendingMachine } from 'src/app/interfaces/vendingMachine';
+
+import { classicToast } from 'src/app/helpers/toaster';
 
 
 @Component({
@@ -47,7 +49,8 @@ export class VendingMachinePage implements OnInit {
         private machineService: VendingMachineService,
         private orderService: OrderService,
         private productService: ProductService,
-        private animationController: AnimationController
+        private animationController: AnimationController,
+        private router: Router
     ) {
         // Assignation naive en attendant d'implementer un async pipe
         this.machine = {
@@ -179,10 +182,16 @@ export class VendingMachinePage implements OnInit {
         // Une fois terminé on peut lancer l'animation
         await this.animateUnlocking(lockersToUnlock);
 
-        // Passer la commande en statut "retrieved" (id 4)
-        // this.orderService.toStatusIsRetrieved(this.order.id).subscribe(res => {
-            // Afficher toast message de succés et rediriger vers profile
-        // })
+        // Passe la commande en statut "retrieved" (id 4)
+        this.orderService.toStatusIsRetrieved(this.order.id).subscribe(res => {
+            classicToast(
+                "Commande récupérée",
+                "checkmark-circle-outline",
+                "success"
+            ).then(() => {
+                this.router.navigate(['/profile']);
+            });
+        });
     }
 
     /**

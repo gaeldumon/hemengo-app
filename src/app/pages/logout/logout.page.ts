@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { toastController } from '@ionic/core';
+import { classicToast } from 'src/app/helpers/toaster';
 
 import { TokenService } from 'src/app/services/token.service';
 
@@ -17,25 +17,9 @@ export class LogoutPage implements OnInit {
         private tokenService: TokenService,
     ) { }
 
-    /**
-     * 
-     * @param message 
-     * @param icon 
-     */
-    async toastSuccess(message: string, icon: string) {
-        const toast = await toastController.create({
-            color: 'success',
-            duration: 2000,
-            message: message,
-            icon: icon
-        });
-
-        await toast.present();
-    }
-
     ngOnInit() {
         this.tokenService.clearToken();
-        this.toastSuccess("Déconnexion réussie", 'log-out-outline');
+        classicToast("Déconnexion réussie", "log-out-outline", "success");
     }
 
 }

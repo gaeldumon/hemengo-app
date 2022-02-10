@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { toastController } from '@ionic/core';
 import { Platform } from '@ionic/angular';
 
 import { UserService } from 'src/app/services/user.service';
@@ -14,6 +13,7 @@ import { IOrder } from 'src/app/interfaces/order';
 
 import { environment } from 'src/environments/environment';
 import { isToday } from 'src/app/helpers/util';
+import { classicToast } from 'src/app/helpers/toaster';
 
 
 @Component({
@@ -119,10 +119,9 @@ export class ProfilePage implements OnInit {
     private launchOrderPickupAction(order: IOrder) {
         if (this.platform.is('android')) {
             window.open('android-app://com.example.hemengoscanner', "_system");
-            this.toastSuccess("SUR ANDROID", 'log-out-outline');
+            classicToast("Plateforme Android", "logo-android", "success");
         } else {
             this.router.navigate(['demo', 'order', order.id]);
-            this.toastSuccess('PAS SUR ANDROID', 'log-out-outline');
         }
     }
 
@@ -135,21 +134,5 @@ export class ProfilePage implements OnInit {
         const d = new Date(date);
         const month = ((d.getMonth() + 1) < 9) ? "0" + (d.getMonth() + 1) : d.getMonth() + 1;
         return `${d.getDate()}/${month}/${d.getFullYear()}`;
-    }
-
-    /**
-     * TODO : A supprimer avant soutenance. Utilisé pour debugger.
-     * @param message 
-     * @param icon 
-     */
-    private async toastSuccess(message: string, icon: string) {
-        const toast = await toastController.create({
-            color: 'success',
-            duration: 2000,
-            message: message,
-            icon: icon
-        });
-
-        await toast.present();
     }
 }
