@@ -16,7 +16,7 @@ export class ProductService {
     constructor(private http: HttpClient) { }
 
     /**
-     * 
+     * Retourne un produit par son id.
      * @param statusId 
      * @returns 
      */

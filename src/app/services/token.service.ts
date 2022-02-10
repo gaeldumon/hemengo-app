@@ -13,7 +13,7 @@ export class TokenService {
 
     /**
      * Enregistre le token d'accés (par exemple lors du login/register) dans le 
-     * local storage et redirige vers la route /profile.
+     * local storage et redirige vers la route /profile sans paramètres.
      * @param token 
      */
     public saveToken(token: string): void {
@@ -48,7 +48,7 @@ export class TokenService {
 
     /**
      * Supprime le token sous le nom accessToken du local storage et redirige
-     * vers la route /login.
+     * vers la route /login sans paramètres.
      */
     public clearToken(): void {
         localStorage.removeItem(environment.accessToken);

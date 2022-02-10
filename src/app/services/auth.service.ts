@@ -17,7 +17,7 @@ export class AuthService {
     constructor(private http: HttpClient) { }
 
     /**
-     * 
+     * Lance une requête de connexion.
      * @param credentials 
      * @returns 
      */
@@ -26,7 +26,7 @@ export class AuthService {
     }
 
     /**
-     * 
+     * Lance une requête d'inscription.
      * @param credentials 
      * @returns 
      */

@@ -17,7 +17,7 @@ export class OrderService {
     constructor(private http: HttpClient) { }
 
     /**
-     * 
+     * Retourne une commande par son id.
      * @param orderId 
      * @returns 
      */
@@ -28,7 +28,7 @@ export class OrderService {
     }
 
     /**
-     * 
+     * Retourne toutes les commandes actives d'un utilisateur.
      * @param userId 
      * @returns 
      */
@@ -39,7 +39,8 @@ export class OrderService {
     }
 
     /**
-     * 
+     * Retourne toutes les commandes archivées d'un utilisateur (archivées, 
+     * récupérées, annulées..).
      * @param userId 
      * @returns 
      */
@@ -50,7 +51,7 @@ export class OrderService {
     }
 
     /**
-     * 
+     * Retourne tous les produits d'une commande.
      * @param orderId 
      * @returns 
      */
@@ -61,7 +62,7 @@ export class OrderService {
     }
 
     /**
-     * 
+     * Bascule une commande en statut récupérée (statut 4 - retrieved).
      * @param payload 
      * @returns 
      */

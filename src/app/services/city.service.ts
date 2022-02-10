@@ -16,7 +16,7 @@ export class CityService {
     constructor(private http: HttpClient) { }
 
     /**
-     * 
+     * Retourne une ville par son id.
      * @param id 
      * @returns 
      */

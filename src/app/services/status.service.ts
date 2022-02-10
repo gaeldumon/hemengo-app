@@ -16,7 +16,7 @@ export class StatusService {
     constructor(private http: HttpClient) { }
 
     /**
-     * 
+     * Retourne un statut par son id.
      * @param statusId 
      * @returns 
      */
