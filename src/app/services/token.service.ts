@@ -52,6 +52,6 @@ export class TokenService {
      */
     public clearToken(): void {
         localStorage.removeItem(environment.accessToken);
-        this.router.navigate(['/login']);
+        this.router.navigate(['/hello']);
     }
 }
